@@ -4,22 +4,15 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Sound from 'react-sound';
 
-import { Button, Card, Progress } from '../atoms';
+import { Button, Card, Slider } from '../atoms';
 
 import type { musicItemType } from '../reducers/music';
 import type { queueStateType } from '../reducers/queue';
 
-import { play, pause } from '../actions/queue';
+import { play, pause, next } from '../actions/queue';
 import { currentMusicSelector } from '../selectors/queue';
 
-const DetailContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  border-bottom: 1px solid #eee;
-`;
+import { getFormattedTime } from '../utils/helpers';
 
 const CurrentMusic = styled.div`
   display: flex;
@@ -29,6 +22,40 @@ const CurrentMusic = styled.div`
 `;
 
 class Player extends Component {
+  state: {
+    duration: number,
+    position: number
+  }
+
+  state = {
+    duration: 1,
+    position: 0
+  };
+
+  onLoading = ({ duration }: { duration: number }) => {
+    this.setState({ duration, position: 0 });
+  };
+
+  onPlaying = ({ position }: { position: number }) => {
+    this.setState({ position });
+  };
+
+  onFinishedPlaying = () => {
+    this.props.onNext();
+  };
+
+  onPositionDragStart = () => {
+    this.props.onPause();
+  };
+
+  onPositionDragStop = () => {
+    this.props.onPlay();
+  };
+
+  onPositionChange = (position: number) => {
+    this.setState({ position });
+  };
+
   props: {
     current: musicItemType,
     status: string,
@@ -38,27 +65,37 @@ class Player extends Component {
 
   render() {
     const { current, status, onPlay, onPause } = this.props;
+    const { duration, position } = this.state;
 
     return (
       <div>
         <Card>
           {current && (
-            <DetailContainer>
+            <div>
               <CurrentMusic>
                 <div>{current.title}</div>
                 <div>{current.album}</div>
                 <div>{current.artist.join(', ')}</div>
               </CurrentMusic>
-            </DetailContainer>
+              <Slider
+                max={duration}
+                min={0}
+                value={position}
+                onChange={this.onPositionChange}
+                onDragStart={this.onPositionDragStart}
+                onDragStop={this.onPositionDragStop}
+              />
+            </div>
           )}
         </Card>
         {current && (
           <Sound
             url={current.file}
             playStatus={Sound.status[status]}
-            onLoading={(...params) => console.log('onLoading', params)}
-            onPlaying={(...params) => console.log('onPlaying', params)}
-            onFinishedPlaying={(...params) => console.log('onFinishedPlaying', params)}
+            position={position}
+            onLoading={this.onLoading}
+            onPlaying={this.onPlaying}
+            onFinishedPlaying={this.onFinishedPlaying}
           />
         )}
         {status !== 'PLAYING' && (
@@ -83,7 +120,8 @@ const mapStateToProps = (state: { queue: queueStateType }) => ({
 
 const mapDispatchToProps = (dispatch: () => {}) => ({
   onPlay: () => dispatch(play()),
-  onPause: () => dispatch(pause())
+  onPause: () => dispatch(pause()),
+  onNext: () => dispatch(next())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -5,7 +5,8 @@ import {
   ADD_QUEUE,
   PLAY_CURRENT,
   PLAY_FROM,
-  PAUSE_QUEUE
+  PAUSE_QUEUE,
+  NEXT_QUEUE
 } from '../reducers/queue';
 
 export const add = (list: string[]) => ({ type: ADD_QUEUE, data: list });
@@ -24,3 +25,4 @@ const playCurrent = () => ({ type: PLAY_CURRENT });
 const playFrom = id => ({ type: PLAY_FROM, data: id });
 
 export const pause = () => ({ type: PAUSE_QUEUE });
+export const next = () => ({ type: NEXT_QUEUE });
