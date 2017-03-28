@@ -9,7 +9,7 @@ import { Button, Card, Slider } from '../atoms';
 import type { musicItemType } from '../reducers/music';
 import type { queueStateType } from '../reducers/queue';
 
-import { play, pause, next } from '../actions/queue';
+import { play, pause, next, previous } from '../actions/queue';
 import { currentMusicSelector } from '../selectors/queue';
 
 import { getFormattedTime } from '../utils/helpers';
@@ -25,7 +25,7 @@ class Player extends Component {
   state: {
     duration: number,
     position: number
-  }
+  };
 
   state = {
     duration: 1,
@@ -60,17 +60,19 @@ class Player extends Component {
     current: musicItemType,
     status: string,
     onPlay: () => {},
-    onPause: () => {}
-  }
+    onPause: () => {},
+    onNext: () => {},
+    onPrevious: () => {}
+  };
 
   render() {
-    const { current, status, onPlay, onPause } = this.props;
+    const { current, status, onPlay, onPause, onPrevious, onNext } = this.props;
     const { duration, position } = this.state;
 
     return (
       <div>
         <Card>
-          {current && (
+          {current &&
             <div>
               <CurrentMusic>
                 <div>{current.title}</div>
@@ -85,10 +87,9 @@ class Player extends Component {
                 onDragStart={this.onPositionDragStart}
                 onDragStop={this.onPositionDragStop}
               />
-            </div>
-          )}
+            </div>}
         </Card>
-        {current && (
+        {current &&
           <Sound
             url={current.file}
             playStatus={Sound.status[status]}
@@ -96,18 +97,21 @@ class Player extends Component {
             onLoading={this.onLoading}
             onPlaying={this.onPlaying}
             onFinishedPlaying={this.onFinishedPlaying}
-          />
-        )}
-        {status !== 'PLAYING' && (
+          />}
+        <Button onClick={onPrevious}>
+          Previous
+        </Button>
+        {status !== 'PLAYING' &&
           <Button onClick={onPlay}>
             Play
-          </Button>
-        )}
-        {status === 'PLAYING' && (
+          </Button>}
+        {status === 'PLAYING' &&
           <Button onClick={onPause}>
             Pause
-          </Button>
-        )}
+          </Button>}
+        <Button onClick={onNext}>
+          Next
+        </Button>
       </div>
     );
   }
@@ -121,7 +125,8 @@ const mapStateToProps = (state: { queue: queueStateType }) => ({
 const mapDispatchToProps = (dispatch: () => {}) => ({
   onPlay: () => dispatch(play()),
   onPause: () => dispatch(pause()),
-  onNext: () => dispatch(next())
+  onNext: () => dispatch(next()),
+  onPrevious: () => dispatch(previous())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -6,23 +6,26 @@ import {
   PLAY_CURRENT,
   PLAY_FROM,
   PAUSE_QUEUE,
-  NEXT_QUEUE
+  NEXT_QUEUE,
+  PREVIOUS_QUEUE
 } from '../reducers/queue';
 
 export const add = (list: string[]) => ({ type: ADD_QUEUE, data: list });
 
-export const play = () => (dispatch: () => void, getState: () => { queue: queueStateType }) => {
-  const { queue } = getState();
+export const play = () =>
+  (dispatch: () => void, getState: () => { queue: queueStateType }) => {
+    const { queue } = getState();
 
-  if (queue.current) {
-    dispatch(playCurrent());
-  } else if (queue.list.length) {
-    dispatch(playFrom(queue.list[0]));
-  }
-};
+    if (queue.current) {
+      dispatch(playCurrent());
+    } else if (queue.list.length) {
+      dispatch(playFrom(queue.list[0]));
+    }
+  };
 
 const playCurrent = () => ({ type: PLAY_CURRENT });
 const playFrom = id => ({ type: PLAY_FROM, data: id });
 
 export const pause = () => ({ type: PAUSE_QUEUE });
 export const next = () => ({ type: NEXT_QUEUE });
+export const previous = () => ({ type: PREVIOUS_QUEUE });

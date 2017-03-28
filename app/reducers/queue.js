@@ -15,6 +15,7 @@ export const PLAY_CURRENT = 'PLAY_CURRENT';
 export const PLAY_FROM = 'PLAY_FROM';
 export const PAUSE_QUEUE = 'PAUSE_QUEUE';
 export const NEXT_QUEUE = 'NEXT_QUEUE';
+export const PREVIOUS_QUEUE = 'PREVIOUS_QUEUE';
 
 const initialState = {
   list: [],
@@ -22,7 +23,10 @@ const initialState = {
   current: null
 };
 
-export default function music(state: queueStateType = initialState, action: actionType) {
+export default function music(
+  state: queueStateType = initialState,
+  action: actionType
+) {
   const { type, data } = action;
   switch (type) {
     case ADD_QUEUE:
@@ -39,6 +43,13 @@ export default function music(state: queueStateType = initialState, action: acti
         return state;
       }
       return { ...state, current: state.list[currentIndex + 1] };
+    }
+    case PREVIOUS_QUEUE: {
+      const currentIndex = state.list.indexOf(state.current);
+      if (currentIndex === 0) {
+        return state;
+      }
+      return { ...state, current: state.list[currentIndex - 1] };
     }
     default:
       return state;
