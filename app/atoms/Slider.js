@@ -7,6 +7,7 @@ export default class Progress extends Component {
   static defaultProps = {
     min: 0,
     max: 100,
+    sliderStyle: {},
     value: 0,
     onChange: () => {},
     onDragStart: () => {},
@@ -16,6 +17,7 @@ export default class Progress extends Component {
   props: {
     min: number,
     max: number,
+    sliderStyle: {},
     value: number,
     onChange: (number) => void,
     onDragStart: () => void,
@@ -23,12 +25,21 @@ export default class Progress extends Component {
   };
 
   render() {
-    const { max, min, value, onChange, onDragStart, onDragStop } = this.props;
+    const {
+      max,
+      min,
+      sliderStyle,
+      value,
+      onChange,
+      onDragStart,
+      onDragStop
+    } = this.props;
 
     return (
       <Slider
         min={min}
         max={max}
+        sliderStyle={sliderStyle}
         value={value <= max ? value : max}
         onChange={(event: {}, position: number) => onChange(position)}
         onDragStart={onDragStart}

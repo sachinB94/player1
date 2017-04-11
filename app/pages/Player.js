@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Sound from 'react-sound';
 
-import { Button, Card, Slider } from '../atoms';
+import { ActionButton, Card, Slider } from '../atoms';
 
 import type { musicItemType } from '../reducers/music';
 import type { queueStateType } from '../reducers/queue';
@@ -12,13 +12,29 @@ import type { queueStateType } from '../reducers/queue';
 import { play, pause, next, previous } from '../actions/queue';
 import { currentMusicSelector } from '../selectors/queue';
 
-import { getFormattedTime } from '../utils/helpers';
+// import { getFormattedTime } from '../utils/helpers';
 
 const CurrentMusic = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
+`;
+
+const CurrentMusicTitle = styled.div`
+  font-weight: bold;
+  font-size: 15px;
+`;
+
+const CurrentMusicArtist = styled.div`
+  font-size: 12px;
+`;
+
+const Actions = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 class Player extends Component {
@@ -75,19 +91,41 @@ class Player extends Component {
           {current &&
             <div>
               <CurrentMusic>
-                <div>{current.title}</div>
-                <div>{current.album}</div>
-                <div>{current.artist.join(', ')}</div>
+                <CurrentMusicTitle>{current.title}</CurrentMusicTitle>
+                <CurrentMusicArtist>
+                  {current.artist.join(', ')} - {current.album}
+                </CurrentMusicArtist>
               </CurrentMusic>
               <Slider
-                max={duration}
                 min={0}
+                max={duration}
                 value={position}
                 onChange={this.onPositionChange}
                 onDragStart={this.onPositionDragStart}
                 onDragStop={this.onPositionDragStop}
               />
             </div>}
+          <Actions>
+            <ActionButton
+              className="previous-next"
+              iconStyle={{ width: 50, height: 50 }}
+              icon="previous"
+              onClick={onPrevious}
+            />
+            <div style={{ padding: '0 20px' }}>
+              <ActionButton
+                iconStyle={{ width: 100, height: 100 }}
+                icon={status === 'PLAYING' ? 'pause' : 'play'}
+                onClick={() => status === 'PLAYING' ? onPause() : onPlay()}
+              />
+            </div>
+            <ActionButton
+              className="previous-next"
+              iconStyle={{ width: 40, height: 40 }}
+              icon="next"
+              onClick={onNext}
+            />
+          </Actions>
         </Card>
         {current &&
           <Sound
@@ -98,20 +136,6 @@ class Player extends Component {
             onPlaying={this.onPlaying}
             onFinishedPlaying={this.onFinishedPlaying}
           />}
-        <Button onClick={onPrevious}>
-          Previous
-        </Button>
-        {status !== 'PLAYING' &&
-          <Button onClick={onPlay}>
-            Play
-          </Button>}
-        {status === 'PLAYING' &&
-          <Button onClick={onPause}>
-            Pause
-          </Button>}
-        <Button onClick={onNext}>
-          Next
-        </Button>
       </div>
     );
   }

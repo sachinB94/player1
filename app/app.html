@@ -4,30 +4,31 @@
     <meta charset="utf-8">
     <title>Hello Electron React!</title>
     <script>
-      (function() {
-        if (!process.env.HOT) {
-          const link = document.createElement('link');
-          link.rel = 'stylesheet';
-          link.href = './dist/style.css';
-          // HACK: Writing the script path should be done with webpack
-          document.getElementsByTagName('head')[0].appendChild(link);
-        }
-      }());
-    </script>
+    (function() {
+  if (!process.env.HOT) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = './dist/style.css';
+    // HACK: Writing the script path should be done with webpack
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }
+})();
+</script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>
     <script>
-      {
-        const script = document.createElement('script');
-        const port = process.env.PORT || 3000;
-        script.src = (process.env.HOT)
-          ? 'http://localhost:' + port + '/dist/bundle.js'
-          : './dist/bundle.js';
-        // HACK: Writing the script path should be done with webpack
-        document.body.appendChild(script);
-      }
-    </script>
+    {
+  const script = document.createElement('script');
+  const port = process.env.PORT || 3000;
+  script.src = process.env.HOT
+    ? 'http://localhost:' + port + '/dist/bundle.js'
+    : './dist/bundle.js';
+  // HACK: Writing the script path should be done with webpack
+  document.body.appendChild(script);
+}
+</script>
   </body>
 </html>
