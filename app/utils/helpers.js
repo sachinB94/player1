@@ -37,5 +37,5 @@ export const getFormattedTime = milliseconds => {
   const totalSeconds = Math.floor(milliseconds / 1000);
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = (totalSeconds - minutes * 60).toString();
-  return `${minutes}:${seconds}${seconds.length === 1 ? '0' : ''}`;
+  return `${minutes}:${seconds.length === 1 ? '0' : ''}${seconds}`;
 };
