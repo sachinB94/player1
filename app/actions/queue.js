@@ -7,7 +7,8 @@ import {
   PLAY_FROM,
   PAUSE_QUEUE,
   NEXT_QUEUE,
-  PREVIOUS_QUEUE
+  PREVIOUS_QUEUE,
+  SET_VOLUME
 } from '../reducers/queue';
 
 export const add = (list: string[]) => ({ type: ADD_QUEUE, data: list });
@@ -29,3 +30,7 @@ const playFrom = id => ({ type: PLAY_FROM, data: id });
 export const pause = () => ({ type: PAUSE_QUEUE });
 export const next = () => ({ type: NEXT_QUEUE });
 export const previous = () => ({ type: PREVIOUS_QUEUE });
+export const setVolume = (volume: number) => ({
+  type: SET_VOLUME,
+  data: volume
+});

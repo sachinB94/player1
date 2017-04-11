@@ -2,7 +2,8 @@
 export type queueStateType = {
   list: string[],
   status: string,
-  current: string | null
+  current: string | null,
+  volume: number
 };
 
 type actionType = {
@@ -16,11 +17,13 @@ export const PLAY_FROM = 'PLAY_FROM';
 export const PAUSE_QUEUE = 'PAUSE_QUEUE';
 export const NEXT_QUEUE = 'NEXT_QUEUE';
 export const PREVIOUS_QUEUE = 'PREVIOUS_QUEUE';
+export const SET_VOLUME = 'SET_VOLUME';
 
 const initialState = {
   list: [],
   status: 'STOPPED',
-  current: null
+  current: null,
+  volume: 100
 };
 
 export default function music(
@@ -51,6 +54,8 @@ export default function music(
       }
       return { ...state, current: state.list[currentIndex - 1] };
     }
+    case SET_VOLUME:
+      return { ...state, volume: action.data };
     default:
       return state;
   }

@@ -5,9 +5,11 @@ import Slider from 'material-ui/Slider';
 
 export default class Progress extends Component {
   static defaultProps = {
+    style: {},
+    sliderStyle: {},
+    axis: 'x',
     min: 0,
     max: 100,
-    sliderStyle: {},
     value: 0,
     onChange: () => {},
     onDragStart: () => {},
@@ -15,9 +17,11 @@ export default class Progress extends Component {
   };
 
   props: {
+    style: {},
+    sliderStyle: {},
+    axis: string,
     min: number,
     max: number,
-    sliderStyle: {},
     value: number,
     onChange: (number) => void,
     onDragStart: () => void,
@@ -26,9 +30,11 @@ export default class Progress extends Component {
 
   render() {
     const {
-      max,
-      min,
+      style,
       sliderStyle,
+      axis,
+      min,
+      max,
       value,
       onChange,
       onDragStart,
@@ -37,9 +43,11 @@ export default class Progress extends Component {
 
     return (
       <Slider
+        style={style}
+        sliderStyle={sliderStyle}
+        axis={axis}
         min={min}
         max={max}
-        sliderStyle={sliderStyle}
         value={value <= max ? value : max}
         onChange={(event: {}, position: number) => onChange(position)}
         onDragStart={onDragStart}

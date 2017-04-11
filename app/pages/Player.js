@@ -1,41 +1,16 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import Sound from 'react-sound';
 
-import { ActionButton, Card, Slider } from '../atoms';
+import { Card } from '../atoms';
+import { MusicBar, PlayerControl, CurrentMusicDescription } from '../organisms';
 
 import type { musicItemType } from '../reducers/music';
 import type { queueStateType } from '../reducers/queue';
 
-import { play, pause, next, previous } from '../actions/queue';
+import { play, pause, next, previous, setVolume } from '../actions/queue';
 import { currentMusicSelector } from '../selectors/queue';
-
-// import { getFormattedTime } from '../utils/helpers';
-
-const CurrentMusic = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-`;
-
-const CurrentMusicTitle = styled.div`
-  font-weight: bold;
-  font-size: 15px;
-`;
-
-const CurrentMusicArtist = styled.div`
-  font-size: 12px;
-`;
-
-const Actions = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
 
 class Player extends Component {
   state: {
@@ -56,18 +31,6 @@ class Player extends Component {
     this.setState({ position });
   };
 
-  onFinishedPlaying = () => {
-    this.props.onNext();
-  };
-
-  onPositionDragStart = () => {
-    this.props.onPause();
-  };
-
-  onPositionDragStop = () => {
-    this.props.onPlay();
-  };
-
   onPositionChange = (position: number) => {
     this.setState({ position });
   };
@@ -75,66 +38,67 @@ class Player extends Component {
   props: {
     current: musicItemType,
     status: string,
+    volume: number,
     onPlay: () => {},
     onPause: () => {},
     onNext: () => {},
-    onPrevious: () => {}
+    onPrevious: () => {},
+    onVolumeChange: () => {}
   };
 
   render() {
-    const { current, status, onPlay, onPause, onPrevious, onNext } = this.props;
+    const {
+      current,
+      status,
+      volume,
+      onPlay,
+      onPause,
+      onPrevious,
+      onNext,
+      onVolumeChange
+    } = this.props;
     const { duration, position } = this.state;
 
     return (
       <div>
         <Card>
-          {current &&
-            <div>
-              <CurrentMusic>
-                <CurrentMusicTitle>{current.title}</CurrentMusicTitle>
-                <CurrentMusicArtist>
-                  {current.artist.join(', ')} - {current.album}
-                </CurrentMusicArtist>
-              </CurrentMusic>
-              <Slider
-                min={0}
-                max={duration}
-                value={position}
-                onChange={this.onPositionChange}
-                onDragStart={this.onPositionDragStart}
-                onDragStop={this.onPositionDragStop}
-              />
-            </div>}
-          <Actions>
-            <ActionButton
-              className="previous-next"
-              iconStyle={{ width: 50, height: 50 }}
-              icon="previous"
-              onClick={onPrevious}
-            />
-            <div style={{ padding: '0 20px' }}>
-              <ActionButton
-                iconStyle={{ width: 100, height: 100 }}
-                icon={status === 'PLAYING' ? 'pause' : 'play'}
-                onClick={() => status === 'PLAYING' ? onPause() : onPlay()}
-              />
-            </div>
-            <ActionButton
-              className="previous-next"
-              iconStyle={{ width: 40, height: 40 }}
-              icon="next"
-              onClick={onNext}
-            />
-          </Actions>
+          {current
+            ? <div>
+                <CurrentMusicDescription
+                  title={current.title}
+                  artist={current.artist}
+                  album={current.album}
+                />
+                <div style={{ margin: 10 }}>
+                  <MusicBar
+                    duration={duration}
+                    position={position}
+                    onPositionChange={this.onPositionChange}
+                    onPositionDragStart={onPause}
+                    onPositionDragStop={onPlay}
+                  />
+                </div>
+              </div>
+            : <div style={{ height: 100 }} />}
+          <PlayerControl
+            status={status}
+            volume={volume}
+            onPlay={onPlay}
+            onPause={onPause}
+            onPrevious={onPrevious}
+            onNext={onNext}
+            onVolumeChange={onVolumeChange}
+          />
         </Card>
         {current &&
           <Sound
             url={current.file}
             playStatus={Sound.status[status]}
             position={position}
+            volume={volume}
             onLoading={this.onLoading}
             onPlaying={this.onPlaying}
-            onFinishedPlaying={this.onFinishedPlaying}
+            onFinishedPlaying={onNext}
           />}
       </div>
     );
@@ -143,14 +107,16 @@ class Player extends Component {
 
 const mapStateToProps = (state: { queue: queueStateType }) => ({
   current: currentMusicSelector(state),
-  status: state.queue.status
+  status: state.queue.status,
+  volume: state.queue.volume
 });
 
 const mapDispatchToProps = (dispatch: () => {}) => ({
   onPlay: () => dispatch(play()),
   onPause: () => dispatch(pause()),
   onNext: () => dispatch(next()),
-  onPrevious: () => dispatch(previous())
+  onPrevious: () => dispatch(previous()),
+  onVolumeChange: (volume: number) => dispatch(setVolume(volume))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

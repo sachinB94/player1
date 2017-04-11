@@ -1,9 +1,3 @@
-import App from './App';
-import Library from './Library';
-import Player from './Player';
-
-export {
-  App,
-  Library,
-  Player
-};
+export { default as App } from './App';
+export { default as Library } from './Library';
+export { default as Player } from './Player';
