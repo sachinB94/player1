@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 
 export default class Button extends Component {
-  static defautlProps = {
+  static defaultProps = {
     type: 'default',
     disabled: false,
     children: '',

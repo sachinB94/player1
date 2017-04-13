@@ -60,7 +60,7 @@ class Player extends Component {
     const { duration, position } = this.state;
 
     return (
-      <div>
+      <div id="player-container">
         <Card>
           {current
             ? <div>
