@@ -39,7 +39,7 @@ class VolumeControl extends Component {
         </div>
         <Slider
           axis="y"
-          style={{ height: 80 }}
+          style={{ height: 74 }}
           sliderStyle={{ margin: 0 }}
           min={0}
           max={100}

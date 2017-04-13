@@ -8,17 +8,16 @@ import {
 } from '../molecules';
 
 const Actions = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 `;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+const VolumeContainer = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
 `;
 
 class PlayerControl extends Component {
@@ -44,7 +43,7 @@ class PlayerControl extends Component {
     } = this.props;
 
     return (
-      <Container>
+      <div style={{ position: 'relative' }}>
         <Actions>
           <MediumActionButton icon="previous" onClick={onPrevious} />
           <div style={{ padding: '0 20px' }}>
@@ -55,10 +54,10 @@ class PlayerControl extends Component {
           </div>
           <MediumActionButton icon="next" onClick={onNext} />
         </Actions>
-        <div>
+        <VolumeContainer>
           <VolumeControl value={volume} onChange={onVolumeChange} />
-        </div>
-      </Container>
+        </VolumeContainer>
+      </div>
     );
   }
 }
