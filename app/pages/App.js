@@ -8,6 +8,14 @@ import Player from './Player';
 import SideMenu from './SideMenu';
 
 export default class App extends Component {
+  state = {
+    menuHeight: 'auto'
+  };
+
+  state: {
+    menuHeight: string
+  };
+
   componentDidMount() {
     this.setMenuHeight();
   }
@@ -22,7 +30,7 @@ export default class App extends Component {
       );
       const playerHeight = player.offsetHeight;
 
-      menu.style.height = `${viewportHeight - playerHeight - 2}px`;
+      this.setState({ menuHeight: `${viewportHeight - playerHeight - 2}px` });
     }
   };
 
@@ -31,16 +39,25 @@ export default class App extends Component {
   };
 
   render() {
+    const { menuHeight } = this.state;
+    const { children } = this.props;
+
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(baseTheme)}>
         <div>
           <Player />
-          <div id="menu-container" style={{ display: 'flex', paddingTop: 2 }}>
+          <div
+            id="menu-container"
+            style={{ display: 'flex', paddingTop: 2, height: menuHeight }}
+          >
             <div style={{ paddingRight: 2 }}>
               <SideMenu />
             </div>
             <div style={{ flex: 1 }}>
-              {this.props.children}
+              {React.Children.map(children, child =>
+                React.cloneElement(child, {
+                  containerHeight: menuHeight
+                }))}
             </div>
           </div>
         </div>

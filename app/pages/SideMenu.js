@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { Card, SelectableList } from '../atoms';
+import { Card } from '../atoms';
+import { SideMenuList } from '../organisms';
 
 class SideMenu extends Component {
   props: {
@@ -14,21 +15,12 @@ class SideMenu extends Component {
   render() {
     const { pathname, switchTo } = this.props;
 
-    const listItems = [
-      { text: 'Library', value: '/library', leftIcon: 'library' },
-      { text: 'Queue', value: '/queue', leftIcon: 'queue' }
-    ];
     return (
       <Card
         containerStyle={{ height: '100%' }}
         style={{ padding: 0, width: 200 }}
       >
-        <SelectableList
-          title="Menu"
-          value={pathname}
-          items={listItems}
-          onChange={switchTo}
-        />
+        <SideMenuList value={pathname} onChange={switchTo} />
       </Card>
     );
   }

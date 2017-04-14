@@ -6,7 +6,7 @@ import { Button } from '../atoms';
 
 import type { musicStateType, musicListType } from '../reducers/music';
 
-import { add } from '../actions/queue';
+import { set } from '../actions/queue';
 
 class MusicUploader extends Component {
   props: {
@@ -17,7 +17,10 @@ class MusicUploader extends Component {
   render() {
     return (
       <div>
-        <Button type="primary" onClick={() => this.props.onAdd(Object.keys(this.props.musicList))}>
+        <Button
+          type="primary"
+          onClick={() => this.props.onAdd(Object.keys(this.props.musicList))}
+        >
           Play All
         </Button>
       </div>
@@ -30,7 +33,7 @@ const mapStateToProps = (state: { music: musicStateType }) => ({
 });
 
 const mapDispatchToProps = (dispatch: () => {}) => ({
-  onAdd: queue => dispatch(add(queue))
+  onAdd: queue => dispatch(set(queue))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusicUploader);

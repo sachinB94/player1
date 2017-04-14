@@ -6,5 +6,11 @@ const queueSelector = state => state.queue;
 
 export const currentMusicSelector = createSelector(
   [musicListSelector, queueSelector],
-  (list, { current }) => list[current]
+  (musicList, { current }) => musicList[current]
+);
+
+export const queueListSelector = createSelector(
+  [musicListSelector, queueSelector],
+  (musicList = {}, { list = [] }) =>
+    list.map(key => ({ ...musicList[key], key }))
 );

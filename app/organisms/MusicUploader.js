@@ -12,8 +12,6 @@ class MusicUploader extends Component {
   };
 
   render() {
-    this.props.onDirectorySelect('/home/sachin/Music');
-
     return (
       <div>
         <Upload onUpload={this.props.onDirectorySelect}>

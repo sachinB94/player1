@@ -1,5 +1,6 @@
 // @flow
 export type musicItemType = {
+  key: string,
   file: string,
   title: string,
   album: string,
@@ -30,7 +31,10 @@ const initialState = {
   loading: false
 };
 
-export default function music(state: musicStateType = initialState, action: actionType) {
+export default function music(
+  state: musicStateType = initialState,
+  action: actionType
+) {
   const { type, data } = action;
   switch (type) {
     case DIRECTORY_SELECT_START:

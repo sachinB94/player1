@@ -11,13 +11,16 @@ type actionType = {
   data: any
 };
 
-export const ADD_QUEUE = 'ADD_QUEUE';
+export const SET_QUEUE = 'SET_QUEUE';
 export const PLAY_CURRENT = 'PLAY_CURRENT';
 export const PLAY_FROM = 'PLAY_FROM';
+export const REMOVE_QUEUE = 'REMOVE_QUEUE';
 export const PAUSE_QUEUE = 'PAUSE_QUEUE';
 export const NEXT_QUEUE = 'NEXT_QUEUE';
 export const PREVIOUS_QUEUE = 'PREVIOUS_QUEUE';
 export const SET_VOLUME = 'SET_VOLUME';
+export const CURRENT_AND_LAST_REMOVED = 'CURRENT_AND_LAST_REMOVED';
+export const CURRENT_REMOVED = 'CURRENT_REMOVED';
 
 const initialState = {
   list: [],
@@ -32,7 +35,7 @@ export default function music(
 ) {
   const { type, data } = action;
   switch (type) {
-    case ADD_QUEUE:
+    case SET_QUEUE:
       return { ...state, list: data };
     case PLAY_CURRENT:
       return { ...state, status: 'PLAYING' };
@@ -56,6 +59,10 @@ export default function music(
     }
     case SET_VOLUME:
       return { ...state, volume: action.data };
+    case CURRENT_AND_LAST_REMOVED:
+      return { ...state, status: 'PAUSED', current: null };
+    case CURRENT_REMOVED:
+      return { ...state, current: action.data };
     default:
       return state;
   }

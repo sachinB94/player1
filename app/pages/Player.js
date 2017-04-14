@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Sound from 'react-sound';
 
 import { Card } from '../atoms';
-import { MusicBar, PlayerControl, CurrentMusicDescription } from '../organisms';
+import { MusicBar, PlayerControl, MusicDetails } from '../organisms';
 
 import type { musicItemType } from '../reducers/music';
 import type { queueStateType } from '../reducers/queue';
@@ -64,7 +64,8 @@ class Player extends Component {
         <Card>
           {current
             ? <div>
-                <CurrentMusicDescription
+                <MusicDetails
+                  align="center"
                   title={current.title}
                   artist={current.artist}
                   album={current.album}
@@ -111,7 +112,7 @@ const mapStateToProps = (state: { queue: queueStateType }) => ({
   volume: state.queue.volume
 });
 
-const mapDispatchToProps = (dispatch: () => {}) => ({
+const mapDispatchToProps = (dispatch: () => void) => ({
   onPlay: () => dispatch(play()),
   onPause: () => dispatch(pause()),
   onNext: () => dispatch(next()),

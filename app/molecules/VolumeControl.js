@@ -21,19 +21,17 @@ class VolumeControl extends Component {
   render() {
     const {
       value,
-      muiTheme,
       onChange
     } = this.props;
 
-    const primaryColor = muiTheme.palette.primary1Color;
-    const textColor = muiTheme.palette.textColor;
+    const { primary1Color, textColor } = this.props.muiTheme.palette;
 
     return (
       <Container>
         <div>
           <IconButton
             icon="volumeUp"
-            iconStyle={{ color: value === 100 ? primaryColor : textColor }}
+            iconStyle={{ color: value === 100 ? primary1Color : textColor }}
             onClick={() => onChange(100)}
           />
         </div>
@@ -48,7 +46,7 @@ class VolumeControl extends Component {
         />
         <IconButton
           icon="volumeMute"
-          iconStyle={{ color: value === 0 ? primaryColor : textColor }}
+          iconStyle={{ color: value === 0 ? primary1Color : textColor }}
           onClick={() => onChange(0)}
         />
       </Container>

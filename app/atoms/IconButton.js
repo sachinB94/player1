@@ -4,26 +4,34 @@ import IconButton from 'material-ui/IconButton';
 
 import { getIcon } from './icon';
 
-export default class ActionButton extends Component {
-  static defaultProps = {
-    icon: '',
-    iconStyle: {},
-    onClick: () => {}
-  };
+// export default class IconButtonComponent extends Component {
+//   static defaultProps = {
+//     icon: '',
+//     iconStyle: {},
+//     style: {},
+//     onClick: () => {}
+//   };
+//
+//   props: {
+//     icon: string,
+//     iconStyle: {},
+//     style: {},
+//     onClick: () => void
+//   };
+//
+//   render() {
+//     const { icon, style, iconStyle, onClick } = this.props;
+//
+//     return (
+//       <IconButton style={style} iconStyle={iconStyle} onClick={onClick}>
+//         {getIcon(icon)}
+//       </IconButton>
+//     );
+//   }
+// }
 
-  props: {
-    icon: string,
-    iconStyle: {},
-    onClick: () => void
-  };
-
-  render() {
-    const { icon, iconStyle, onClick } = this.props;
-
-    return (
-      <IconButton iconStyle={iconStyle} onClick={onClick}>
-        {getIcon(icon)}
-      </IconButton>
-    );
-  }
-}
+export default ({ icon, style, iconStyle, onClick }) => (
+  <IconButton style={style} iconStyle={iconStyle} onClick={onClick}>
+    {getIcon(icon)}
+  </IconButton>
+);
