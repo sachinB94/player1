@@ -39,3 +39,16 @@ export const getFormattedTime = milliseconds => {
   const seconds = (totalSeconds - minutes * 60).toString();
   return `${minutes}:${seconds.length === 1 ? '0' : ''}${seconds}`;
 };
+
+export const getArtistAndAlbum = ({ artist, album }) => {
+  if (artist && artist.length && album) {
+    return `${artist.join(', ')} - ${album}`;
+  }
+  if (artist && artist.length) {
+    return artist.join(', ');
+  }
+  if (album) {
+    return album;
+  }
+  return '';
+};

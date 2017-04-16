@@ -2,6 +2,8 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import { getArtistAndAlbum } from '../utils/helpers';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,7 +40,7 @@ class MusicDetails extends React.Component {
       <Container align={align}>
         <Title>{title}</Title>
         <ArtistAlbum>
-          {artist.join(', ')} - {album}
+          {getArtistAndAlbum({ artist, album })}
         </ArtistAlbum>
       </Container>
     );

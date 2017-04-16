@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import { remote } from 'electron';
+
 import {
   LargeActionButton,
   MediumActionButton,
   VolumeControl
 } from '../molecules';
+
+const { app, globalShortcut } = remote;
 
 const Actions = styled.div`
   display: flex;
@@ -21,6 +25,33 @@ const VolumeContainer = styled.div`
 `;
 
 class PlayerControl extends Component {
+  componentDidMount() {
+    if (app.isReady()) {
+      this.attachMediaListeners();
+    } else {
+      app.on('ready', () => this.attachMediaListeners());
+    }
+
+    app.on('will-quit', () => {
+      globalShortcut.unregister('MediaPlayPause');
+      globalShortcut.unregister('MediaNextTrack');
+      globalShortcut.unregister('MediaPreviousTrack');
+    });
+  }
+
+  attachMediaListeners = () => {
+    globalShortcut.register(
+      'MediaPlayPause',
+      () =>
+        this.props.status === 'PLAYING'
+          ? this.props.onPause()
+          : this.props.onPlay()
+    );
+    globalShortcut.register('MediaNextTrack', () => this.props.onNext());
+    globalShortcut.register('MediaPreviousTrack', () =>
+      this.props.onPrevious());
+  };
+
   props: {
     status: string,
     volume: number,

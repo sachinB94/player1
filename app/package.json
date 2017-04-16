@@ -1,13 +1,13 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
-  "version": "1.0.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "music-player",
+  "productName": "MusicPlayer",
+  "version": "0.0.1",
+  "description": "A music player built with Electron, React and Redux",
   "main": "./main.js",
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "Sachin Bansal",
+    "email": "sachinbansal94@gmail.com",
+    "url": "https://github.com/sachinb94"
   },
   "license": "MIT",
   "dependencies": {
