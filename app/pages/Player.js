@@ -106,10 +106,13 @@ class Player extends Component {
   }
 }
 
-const mapStateToProps = (state: { queue: queueStateType }) => ({
+const mapStateToProps = (
+  state: { queue: queueStateType, settings: { theme: string } }
+) => ({
   current: currentMusicSelector(state),
   status: state.queue.status,
-  volume: state.queue.volume
+  volume: state.queue.volume,
+  theme: state.settings.theme
 });
 
 const mapDispatchToProps = (dispatch: () => void) => ({

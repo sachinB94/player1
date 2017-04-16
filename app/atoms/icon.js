@@ -9,6 +9,7 @@ import AvVolumeUp from 'material-ui/svg-icons/av/volume-up';
 import AvQueue from 'material-ui/svg-icons/av/queue-music';
 import AvLibrary from 'material-ui/svg-icons/av/library-music';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
+import ActionSettings from 'material-ui/svg-icons/action/settings';
 
 export const getIcon = (icon: ?string, props: {} = {}) => {
   switch (icon) {
@@ -30,6 +31,8 @@ export const getIcon = (icon: ?string, props: {} = {}) => {
       return <AvLibrary {...props} />;
     case 'delete':
       return <ActionDelete {...props} />;
+    case 'settings':
+      return <ActionSettings {...props} />;
     default:
       return '';
   }

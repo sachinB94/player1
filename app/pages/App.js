@@ -1,13 +1,16 @@
 // @flow
 import React, { Component } from 'react';
-import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Player from './Player';
 import SideMenu from './SideMenu';
+import Settings from './Settings';
 
-export default class App extends Component {
+import * as themes from '../utils/themes';
+
+class App extends Component {
   state = {
     menuHeight: 'auto'
   };
@@ -35,16 +38,20 @@ export default class App extends Component {
   };
 
   props: {
-    children: HTMLElement
+    children: HTMLElement,
+    theme: string
   };
 
   render() {
     const { menuHeight } = this.state;
-    const { children } = this.props;
+    const { theme, children } = this.props;
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(baseTheme)}>
+      <MuiThemeProvider muiTheme={getMuiTheme(themes[theme])}>
         <div>
+          <div style={{ position: 'absolute', right: 10, top: 10 }}>
+            <Settings />
+          </div>
           <Player />
           <div
             id="menu-container"
@@ -54,10 +61,7 @@ export default class App extends Component {
               <SideMenu />
             </div>
             <div style={{ flex: 1 }}>
-              {React.Children.map(children, child =>
-                React.cloneElement(child, {
-                  containerHeight: menuHeight
-                }))}
+              {children}
             </div>
           </div>
         </div>
@@ -65,3 +69,9 @@ export default class App extends Component {
     );
   }
 }
+
+const mapStateToProps = (state: { settings: { theme: string } }) => ({
+  theme: state.settings.theme
+});
+
+export default connect(mapStateToProps)(App);

@@ -27,9 +27,13 @@ class SideMenu extends Component {
 }
 
 const mapStateToProps = (
-  state: { routing: { locationBeforeTransitions: { pathname: string } } }
+  state: {
+    routing: { locationBeforeTransitions: { pathname: string } },
+    settings: { theme: string }
+  }
 ) => ({
-  pathname: state.routing.locationBeforeTransitions.pathname
+  pathname: state.routing.locationBeforeTransitions.pathname,
+  theme: state.settings.theme
 });
 
 const mapDispatchToProps = (dispatch: () => {}) => ({

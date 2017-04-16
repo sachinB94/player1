@@ -44,9 +44,12 @@ class Queue extends Component {
   }
 }
 
-const mapStateToProps = (state: { queue: queueStateType }) => ({
+const mapStateToProps = (
+  state: { queue: queueStateType, settings: { theme: string } }
+) => ({
   list: queueListSelector(state),
-  current: state.queue.current
+  current: state.queue.current,
+  theme: state.settings.theme
 });
 
 const mapDispatchToProps = (dispatch: () => void) => ({
