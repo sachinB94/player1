@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { SelectableList, ListItem, IconButton } from '../atoms';
+import { Sorter } from '../molecules';
 
 import type { musicItemType } from '../reducers/music';
 
 import { getArtistAndAlbum } from '../utils/helpers';
+import { MUSIC_SORT_OPTIONS } from '../utils/constants';
 
 const ListItemContainer = styled.div`
   display: flex;
@@ -33,12 +35,26 @@ class QueueList extends Component {
   props: {
     list: musicItemType[],
     value: string,
+    sortBy: { key: string, type: string },
     onChange: () => void,
-    onDelete: () => void
+    onDelete: () => void,
+    onSort: () => void
   };
 
   render() {
-    const { list, value, onChange, onDelete } = this.props;
+    const { list, value, sortBy, onChange, onDelete, onSort } = this.props;
+
+    const title = (
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <span>Queue</span>
+        <Sorter
+          title="Sort By"
+          value={sortBy}
+          options={MUSIC_SORT_OPTIONS}
+          onChange={onSort}
+        />
+      </div>
+    );
 
     const containerElement = props => (
       <ListItemContainer>
@@ -48,7 +64,7 @@ class QueueList extends Component {
     );
 
     return (
-      <SelectableList title="Queue" value={value} onChange={onChange}>
+      <SelectableList title={title} value={value} onChange={onChange}>
         {list.map(item => (
           <ListItem
             innerDivStyle={{}}

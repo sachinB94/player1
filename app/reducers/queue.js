@@ -3,7 +3,8 @@ export type queueStateType = {
   list: string[],
   status: string,
   current: string | null,
-  volume: number
+  volume: number,
+  sortBy: { key: string, type: string }
 };
 
 type actionType = {
@@ -21,12 +22,14 @@ export const PREVIOUS_QUEUE = 'PREVIOUS_QUEUE';
 export const SET_VOLUME = 'SET_VOLUME';
 export const CURRENT_AND_LAST_REMOVED = 'CURRENT_AND_LAST_REMOVED';
 export const CURRENT_REMOVED = 'CURRENT_REMOVED';
+export const SORT = 'SORT';
 
 const initialState = {
   list: [],
   status: 'STOPPED',
   current: null,
-  volume: 100
+  volume: 100,
+  sortBy: { key: 'title', type: 'asc' }
 };
 
 export default function music(
@@ -44,6 +47,9 @@ export default function music(
     case PAUSE_QUEUE:
       return { ...state, status: 'PAUSED' };
     case NEXT_QUEUE: {
+      if (!state.current) {
+        return state;
+      }
       const currentIndex = state.list.indexOf(state.current);
       if (currentIndex === state.list.length) {
         return state;
@@ -51,6 +57,9 @@ export default function music(
       return { ...state, current: state.list[currentIndex + 1] };
     }
     case PREVIOUS_QUEUE: {
+      if (!state.current) {
+        return state;
+      }
       const currentIndex = state.list.indexOf(state.current);
       if (currentIndex === 0) {
         return state;
@@ -63,6 +72,8 @@ export default function music(
       return { ...state, status: 'PAUSED', current: null };
     case CURRENT_REMOVED:
       return { ...state, current: action.data };
+    case SORT:
+      return { ...state, sortBy: action.data };
     default:
       return state;
   }

@@ -10,12 +10,17 @@ import {
   PREVIOUS_QUEUE,
   SET_VOLUME,
   CURRENT_AND_LAST_REMOVED,
-  CURRENT_REMOVED
+  CURRENT_REMOVED,
+  SORT
 } from '../reducers/queue';
 
 const playCurrent = () => ({ type: PLAY_CURRENT });
 
 export const set = (list: string[]) => ({ type: SET_QUEUE, data: list });
+export const sort = (sortBy: { key: string, type: string }) => ({
+  type: SORT,
+  data: sortBy
+});
 export const playFrom = (id: string) => ({ type: PLAY_FROM, data: id });
 
 export const pause = () => ({ type: PAUSE_QUEUE });

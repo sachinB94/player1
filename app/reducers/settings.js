@@ -11,7 +11,7 @@ type actionType = {
 export const CHANGE_THEME = 'CHANGE_THEME';
 
 const initialState = {
-  theme: 'cyanOnLight'
+  theme: 'cyanOnBlueGrey'
 };
 
 export default function settings(

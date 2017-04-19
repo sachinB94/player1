@@ -34,7 +34,7 @@ class IconMenuComponent extends Component {
             {getIcon(icon)}
           </IconButton>
         }
-        onChange={(event, theme) => onChange(theme)}
+        onChange={(event, newValue) => onChange(newValue)}
         value={value}
       >
         {options.map(option => (

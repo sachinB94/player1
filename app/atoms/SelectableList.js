@@ -15,7 +15,7 @@ class SelectableListComponent extends Component {
   };
 
   props: {
-    title: string,
+    title: string | HTMLElement,
     value: string | number,
     children: HTMLElement,
     onChange: () => void

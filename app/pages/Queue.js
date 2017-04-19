@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Card } from '../atoms';
 import { QueueList } from '../organisms';
 
-import { playFrom, remove } from '../actions/queue';
+import { playFrom, remove, sort } from '../actions/queue';
 import type { queueStateType } from '../reducers/queue';
 import { queueListSelector } from '../selectors/queue';
 
@@ -20,12 +20,21 @@ class Queue extends Component {
   props: {
     list: musicItemType[],
     current: string | null,
+    sortBy: { key: string, type: string },
     onMusicChange: () => void,
-    onMusicDelete: () => void
+    onMusicDelete: () => void,
+    onSort: () => void
   };
 
   render() {
-    const { list, current, onMusicChange, onMusicDelete } = this.props;
+    const {
+      list,
+      current,
+      sortBy,
+      onMusicChange,
+      onMusicDelete,
+      onSort
+    } = this.props;
 
     return (
       <Card
@@ -34,10 +43,12 @@ class Queue extends Component {
         style={{ padding: 0 }}
       >
         <QueueList
+          sortBy={sortBy}
           list={list}
           value={current}
           onChange={onMusicChange}
           onDelete={onMusicDelete}
+          onSort={onSort}
         />
       </Card>
     );
@@ -49,12 +60,14 @@ const mapStateToProps = (
 ) => ({
   list: queueListSelector(state),
   current: state.queue.current,
-  theme: state.settings.theme
+  theme: state.settings.theme,
+  sortBy: state.queue.sortBy
 });
 
 const mapDispatchToProps = (dispatch: () => void) => ({
   onMusicChange: id => dispatch(playFrom(id)),
-  onMusicDelete: id => dispatch(remove(id))
+  onMusicDelete: id => dispatch(remove(id)),
+  onSort: sortBy => dispatch(sort(sortBy))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Queue);

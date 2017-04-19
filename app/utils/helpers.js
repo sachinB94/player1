@@ -52,3 +52,35 @@ export const getArtistAndAlbum = ({ artist, album }) => {
   }
   return '';
 };
+
+export const sortMusicList = (list = [], sort) => {
+  list.sort((item1, item2) => {
+    let seq = 0;
+    if (sort.key === 'title' && item1.title && item2.title) {
+      seq = item1.title.localeCompare(item2.title);
+    } else if (sort.key === 'album' && item1.album && item2.album) {
+      seq = item1.album.localeCompare(item2.album);
+    } else if (
+      sort.key === 'artist' &&
+      item1.artist &&
+      item1.artist.length &&
+      item2.artist &&
+      item2.artist.length
+    ) {
+      seq = item1.artist[0].localeCompare(item2.artist[0]);
+    } else if (sort.key === 'year' && item1.year && item2.year) {
+      seq = item1.year.localeCompare(item2.year);
+    } else if (
+      sort.key === 'genre' &&
+      item1.genre &&
+      item1.genre.length &&
+      item2.genre &&
+      item2.genre.length
+    ) {
+      seq = item1.genre.localeCompare(item2.genre);
+    }
+
+    return sort.type === 'asc' ? seq : -1 * seq;
+  });
+  return list;
+};
