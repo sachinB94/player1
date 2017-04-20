@@ -7,6 +7,45 @@ import { AUDIO_FORMATS } from '../utils/constants';
 
 const statAsync = promisify(stat);
 
+const stringCompare = (string1, string2) => {
+  if (!string1 && !string2) {
+    return 0;
+  }
+  if (string1 === null) {
+    return 1;
+  }
+  if (string2 === null) {
+    return -1;
+  }
+  return string2.toLowerCase().localeCompare(string2.toLowerCase());
+};
+
+const arrayCompare = (array1, array2) => {
+  if ((!array1 || !array1.length) && (!array2 || !array2.length)) {
+    return 0;
+  }
+  if (!array1 || !array1.length) {
+    return 1;
+  }
+  if (!array2 || !array2.length) {
+    return -1;
+  }
+  return array1[0].toLowerCase().localeCompare(array2[0].toLowerCase());
+};
+
+const numberCompare = (number1, number2) => {
+  if (!number1 && !number2) {
+    return 0;
+  }
+  if (!number1) {
+    return 1;
+  }
+  if (!number2) {
+    return -1;
+  }
+  return number1 - number2;
+};
+
 export const isAudioFile = file =>
   statAsync(file)
     .then(
@@ -24,11 +63,11 @@ export const getMetadata = file =>
       }
       resolve({
         file,
-        title: metadata.title,
-        album: metadata.album,
-        artist: metadata.artist,
-        year: metadata.year,
-        genre: metadata.genre
+        title: metadata.title.trim(),
+        album: metadata.album.trim(),
+        artist: metadata.artist.map(a => a.trim()),
+        year: metadata.year ? parseInt(metadata.year.trim(), 10) : null,
+        genre: metadata.genre.map(g => g.trim())
       });
     });
   });
@@ -56,28 +95,16 @@ export const getArtistAndAlbum = ({ artist, album }) => {
 export const sortMusicList = (list = [], sort) => {
   list.sort((item1, item2) => {
     let seq = 0;
-    if (sort.key === 'title' && item1.title && item2.title) {
-      seq = item1.title.localeCompare(item2.title);
-    } else if (sort.key === 'album' && item1.album && item2.album) {
-      seq = item1.album.localeCompare(item2.album);
-    } else if (
-      sort.key === 'artist' &&
-      item1.artist &&
-      item1.artist.length &&
-      item2.artist &&
-      item2.artist.length
-    ) {
-      seq = item1.artist[0].localeCompare(item2.artist[0]);
-    } else if (sort.key === 'year' && item1.year && item2.year) {
-      seq = item1.year.localeCompare(item2.year);
-    } else if (
-      sort.key === 'genre' &&
-      item1.genre &&
-      item1.genre.length &&
-      item2.genre &&
-      item2.genre.length
-    ) {
-      seq = item1.genre.localeCompare(item2.genre);
+    if (sort.key === 'title') {
+      seq = stringCompare(item1.title, item2.title);
+    } else if (sort.key === 'album') {
+      seq = stringCompare(item1.album, item2.album);
+    } else if (sort.key === 'artist') {
+      seq = arrayCompare(item1.artist, item2.artist[0]);
+    } else if (sort.key === 'genre') {
+      seq = arrayCompare(item1.genre, item2.genre[0]);
+    } else if (sort.key === 'year') {
+      seq = numberCompare(item1.year, item2.year);
     }
 
     return sort.type === 'asc' ? seq : -1 * seq;

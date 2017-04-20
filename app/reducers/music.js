@@ -5,7 +5,7 @@ export type musicItemType = {
   title: string,
   album: string,
   artist: string[],
-  year: string,
+  year: number | null,
   genre: string[]
 };
 

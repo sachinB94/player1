@@ -19,10 +19,7 @@ class VolumeControl extends Component {
   };
 
   render() {
-    const {
-      value,
-      onChange
-    } = this.props;
+    const { value, onChange } = this.props;
 
     const { primary1Color, textColor } = this.props.muiTheme.palette;
 

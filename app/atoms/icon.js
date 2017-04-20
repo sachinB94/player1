@@ -10,6 +10,10 @@ import AvQueue from 'material-ui/svg-icons/av/queue-music';
 import AvLibrary from 'material-ui/svg-icons/av/library-music';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import ActionSettings from 'material-ui/svg-icons/action/settings';
+import HardwareKeyboardArrowDown
+  from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import HardwareKeyboardArrowUp
+  from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 
 export const getIcon = (icon: ?string, props: {} = {}) => {
   switch (icon) {
@@ -33,6 +37,10 @@ export const getIcon = (icon: ?string, props: {} = {}) => {
       return <ActionDelete {...props} />;
     case 'settings':
       return <ActionSettings {...props} />;
+    case 'arrow-up':
+      return <HardwareKeyboardArrowUp {...props} />;
+    case 'arrow-down':
+      return <HardwareKeyboardArrowDown {...props} />;
     default:
       return '';
   }

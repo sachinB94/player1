@@ -7,20 +7,23 @@ class DropDownMenuComponent extends Component {
   static defaultProps = {
     value: null,
     options: [],
+    style: {},
     onChange: () => {}
   };
 
   props: {
     value: string | number | null,
     options: { value: string | number, label: string }[],
+    style: {},
     onChange: () => void
   };
 
   render() {
-    const { value, options, onChange } = this.props;
+    const { value, options, style, onChange } = this.props;
 
     return (
       <DropDownMenu
+        style={style}
         onChange={(event, index, newValue) => onChange(newValue)}
         value={value}
       >

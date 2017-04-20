@@ -63,6 +63,11 @@ class QueueList extends Component {
       </ListItemContainer>
     );
 
+    const getSecondaryText = item =>
+      item.year
+        ? `${getArtistAndAlbum(item)} (${item.year})`
+        : getArtistAndAlbum(item);
+
     return (
       <SelectableList title={title} value={value} onChange={onChange}>
         {list.map(item => (
@@ -73,7 +78,7 @@ class QueueList extends Component {
             key={item.key}
             value={item.key}
             primaryText={item.title}
-            secondaryText={getArtistAndAlbum(item)}
+            secondaryText={getSecondaryText(item)}
           />
         ))}
       </SelectableList>
