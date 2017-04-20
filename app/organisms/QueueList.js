@@ -1,25 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import styled from 'styled-components';
 
-import { SelectableList, ListItem, IconButton } from '../atoms';
-import { Sorter } from '../molecules';
+import { SelectableList } from '../atoms';
+import { MusicListItem, Sorter } from '../molecules';
 
 import type { musicItemType } from '../reducers/music';
 
-import { getArtistAndAlbum } from '../utils/helpers';
 import { MUSIC_SORT_OPTIONS } from '../utils/constants';
-
-const ListItemContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  & div {
-    flex: 1;
-  }
-`;
 
 class QueueList extends Component {
   componentDidMount() {
@@ -37,7 +24,7 @@ class QueueList extends Component {
     value: string,
     sortBy: { key: string, type: string },
     onChange: () => void,
-    onDelete: () => void,
+    onDelete: (string) => void,
     onSort: () => void
   };
 
@@ -56,30 +43,10 @@ class QueueList extends Component {
       </div>
     );
 
-    const containerElement = props => (
-      <ListItemContainer>
-        <div {...props} />
-        <IconButton icon="delete" onClick={() => onDelete(props.value)} />
-      </ListItemContainer>
-    );
-
-    const getSecondaryText = item =>
-      item.year
-        ? `${getArtistAndAlbum(item)} (${item.year})`
-        : getArtistAndAlbum(item);
-
     return (
       <SelectableList title={title} value={value} onChange={onChange}>
         {list.map(item => (
-          <ListItem
-            innerDivStyle={{}}
-            containerElement={containerElement}
-            id={`queue_${item.key}`}
-            key={item.key}
-            value={item.key}
-            primaryText={item.title}
-            secondaryText={getSecondaryText(item)}
-          />
+          <MusicListItem item={item} onDelete={() => onDelete(item.key)} />
         ))}
       </SelectableList>
     );
