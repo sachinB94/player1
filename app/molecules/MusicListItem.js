@@ -1,8 +1,8 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import { ListItem, IconButton } from '../atoms';
+import { IconButton } from '../atoms';
 
 import type { musicItemType } from '../reducers/music';
 
@@ -14,7 +14,7 @@ const ListItemContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  & div {
+  & > div {
     flex: 1;
   }
 `;
@@ -24,12 +24,12 @@ const PrimaryTextContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-right: 10px;
+`;
 
-  & div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
+const Title = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Year = styled.div`
@@ -44,45 +44,26 @@ const Genre = styled.div`
   font-size: 14px;
 `;
 
-class MusicListItem extends Component {
-  props: {
-    item: musicItemType,
-    onDelete: () => void
-  };
+export default {
+  Container: (
+    { elementProps, onDelete }: { elementProps: {}, onDelete: () => {} }
+  ) => (
+    <ListItemContainer>
+      <div {...elementProps} />
+      <IconButton icon="delete" onClick={onDelete} />
+    </ListItemContainer>
+  ),
 
-  render() {
-    const { item, onDelete } = this.props;
-
-    const containerElement = props => (
-      <ListItemContainer>
-        <div {...props} />
-        <IconButton icon="delete" onClick={onDelete} />
-      </ListItemContainer>
-    );
-
-    const primaryText = (
-      <PrimaryTextContainer>
-        <div>
-          <span style={{ marginBottom: 5 }}>{item.title}</span>
-          <span style={{ fontSize: 14, opacity: 0.7 }}>
-            {getArtistAndAlbum(item)}
-          </span>
-        </div>
-        <Year>{item.year}</Year>
-        <Genre>{item.genre}</Genre>
-      </PrimaryTextContainer>
-    );
-
-    return (
-      <ListItem
-        containerElement={containerElement}
-        id={`queue_${item.key}`}
-        key={item.key}
-        value={item.key}
-        primaryText={primaryText}
-      />
-    );
-  }
-}
-
-export default MusicListItem;
+  PrimaryText: ({ item }: { item: musicItemType }) => (
+    <PrimaryTextContainer>
+      <Title>
+        <span style={{ marginBottom: 5 }}>{item.title}</span>
+        <span style={{ fontSize: 14, opacity: 0.7 }}>
+          {getArtistAndAlbum(item)}
+        </span>
+      </Title>
+      <Year>{item.year}</Year>
+      <Genre>{item.genre}</Genre>
+    </PrimaryTextContainer>
+  )
+};

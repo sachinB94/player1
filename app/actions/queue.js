@@ -1,4 +1,6 @@
 // @flow
+import uniq from 'lodash.uniq';
+
 import type { queueStateType } from '../reducers/queue';
 
 import {
@@ -35,6 +37,12 @@ export const currentRemoved = (id: string) => ({
   type: CURRENT_REMOVED,
   data: id
 });
+
+export const add = (list: string[]) =>
+  (dispatch: () => void, getState: () => { queue: queueStateType }) => {
+    const { queue } = getState();
+    dispatch(set(uniq(queue.list.concat(list))));
+  };
 
 export const play = () =>
   (dispatch: () => void, getState: () => { queue: queueStateType }) => {

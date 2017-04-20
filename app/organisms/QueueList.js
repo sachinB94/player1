@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 
-import { SelectableList } from '../atoms';
+import { SelectableList, ListItem } from '../atoms';
 import { MusicListItem, Sorter } from '../molecules';
 
 import type { musicItemType } from '../reducers/music';
@@ -46,7 +46,18 @@ class QueueList extends Component {
     return (
       <SelectableList title={title} value={value} onChange={onChange}>
         {list.map(item => (
-          <MusicListItem item={item} onDelete={() => onDelete(item.key)} />
+          <ListItem
+            containerElement={props => (
+              <MusicListItem.Container
+                elementProps={props}
+                onDelete={() => onDelete(item.key)}
+              />
+            )}
+            id={`queue_${item.key}`}
+            key={item.key}
+            value={item.key}
+            primaryText={<MusicListItem.PrimaryText item={item} />}
+          />
         ))}
       </SelectableList>
     );

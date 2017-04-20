@@ -1,12 +1,9 @@
 // @flow
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import { Button } from '../atoms';
 
-import type { musicStateType, musicListType } from '../reducers/music';
-
-import { set } from '../actions/queue';
+import type { musicListType } from '../reducers/music';
 
 class MusicUploader extends Component {
   props: {
@@ -15,12 +12,10 @@ class MusicUploader extends Component {
   };
 
   render() {
+    const { musicList, onAdd } = this.props;
     return (
       <div>
-        <Button
-          type="primary"
-          onClick={() => this.props.onAdd(Object.keys(this.props.musicList))}
-        >
+        <Button type="primary" onClick={() => onAdd(Object.keys(musicList))}>
           Play All
         </Button>
       </div>
@@ -28,12 +23,4 @@ class MusicUploader extends Component {
   }
 }
 
-const mapStateToProps = (state: { music: musicStateType }) => ({
-  musicList: state.music.list
-});
-
-const mapDispatchToProps = (dispatch: () => {}) => ({
-  onAdd: queue => dispatch(set(queue))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MusicUploader);
+export default MusicUploader;

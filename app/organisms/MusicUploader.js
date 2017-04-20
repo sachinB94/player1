@@ -1,10 +1,7 @@
 // @flow
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import { Upload } from '../molecules';
-
-import { directorySelect } from '../actions/music';
 
 class MusicUploader extends Component {
   props: {
@@ -12,18 +9,13 @@ class MusicUploader extends Component {
   };
 
   render() {
+    const { onDirectorySelect } = this.props;
     return (
-      <div>
-        <Upload onUpload={this.props.onDirectorySelect}>
-          Upload a directory
-        </Upload>
-      </div>
+      <Upload onUpload={onDirectorySelect}>
+        Upload a directory
+      </Upload>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch: () => {}) => ({
-  onDirectorySelect: (directory: string) => dispatch(directorySelect(directory))
-});
-
-export default connect(null, mapDispatchToProps)(MusicUploader);
+export default MusicUploader;
