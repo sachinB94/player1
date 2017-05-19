@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Card } from '../atoms';
+import { Card, LinearProgress } from '../atoms';
 import { MusicList } from '../organisms';
 
 import { directorySelect, remove } from '../actions/music';
@@ -18,6 +18,7 @@ class Library extends Component {
 
   props: {
     list: musicItemType[],
+    loading: boolean,
     onAdd: () => void,
     onMusicDelete: () => void,
     onDirectorySelect: () => void
@@ -26,6 +27,7 @@ class Library extends Component {
   render() {
     const {
       list,
+      loading,
       onAdd,
       onMusicDelete,
       onDirectorySelect
@@ -37,8 +39,10 @@ class Library extends Component {
         containerStyle={{ height: '100%', overflowY: 'auto' }}
         style={{ padding: 0 }}
       >
+        {loading && <LinearProgress />}
         <MusicList
           list={list}
+          loading={loading}
           onAdd={onAdd}
           onDelete={onMusicDelete}
           onDirectorySelect={onDirectorySelect}
@@ -52,6 +56,7 @@ const mapStateToProps = (
   state: { music: musicStateType, settings: { theme: string } }
 ) => ({
   list: musicListSelector(state),
+  loading: state.music.loading,
   theme: state.settings.theme
 });
 
