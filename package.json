@@ -165,6 +165,7 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "electron-debug": "^1.1.0",
+    "electron-json-storage": "^3.0.5",
     "font-awesome": "^4.7.0",
     "glob": "^7.1.1",
     "lodash.findindex": "^4.6.0",

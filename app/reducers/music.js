@@ -27,7 +27,7 @@ export const DIRECTORY_SELECT_START = 'DIRECTORY_SELECT_START';
 export const DIRECTORY_SELECT_SUCCESS = 'DIRECTORY_SELECT_SUCCESS';
 export const DIRECTORY_SELECT_FAIL = 'DIRECTORY_SELECT_FAIL';
 
-const initialState = {
+export const initialState = {
   list: {},
   loading: false
 };

@@ -12,7 +12,7 @@ export const CHANGE_THEME = 'CHANGE_THEME';
 export const SHOW_SNACKBAR = 'SHOW_SNACKBAR';
 export const HIDE_SNACKBAR = 'HIDE_SNACKBAR';
 
-const initialState = {
+export const initialState = {
   theme: 'cyanOnBlueGrey',
   snackbar: { open: false, message: '' }
 };

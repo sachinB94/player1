@@ -7,12 +7,15 @@ import rootReducer from '../reducers';
 
 import * as musicActions from '../actions/music';
 import * as queueActions from '../actions/queue';
+import * as settingsActions from '../actions/settings';
 import type { musicStateType } from '../reducers/music';
 import type { queueStateType } from '../reducers/queue';
+import type { settingsStateType } from '../reducers/settings';
 
 const actionCreators = {
   ...musicActions,
   ...queueActions,
+  ...settingsActions,
   push
 };
 
@@ -35,7 +38,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 const enhancer = composeEnhancers(applyMiddleware(thunk, router, logger));
 
 export default function configureStore(
-  initialState?: { music: musicStateType, queue: queueStateType }
+  initialState?: {
+    music: musicStateType,
+    queue: queueStateType,
+    settings: settingsStateType
+  }
 ) {
   const store = createStore(rootReducer, initialState, enhancer);
 

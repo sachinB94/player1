@@ -25,7 +25,7 @@ export const CURRENT_REMOVED = 'CURRENT_REMOVED';
 export const SET_REPEAT = 'SET_REPEAT';
 export const REMOVE_ALL = 'REMOVE_ALL';
 
-const initialState = {
+export const initialState = {
   list: [],
   status: 'STOPPED',
   current: null,

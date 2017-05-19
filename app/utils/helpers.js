@@ -1,50 +1,16 @@
 import { stat, createReadStream } from 'fs';
 import mime from 'mime';
 import mm from 'musicmetadata';
-import Bluebird, { promisify } from 'bluebird';
+import Bluebird, { promisify, filter } from 'bluebird';
+import storage from 'electron-json-storage';
+
+import { initialState as musicInitialState } from '../reducers/music';
+import { initialState as queueInitialState } from '../reducers/queue';
+import { initialState as settingsInitialState } from '../reducers/settings';
 
 import { AUDIO_FORMATS } from '../utils/constants';
 
 const statAsync = promisify(stat);
-
-const stringCompare = (string1, string2) => {
-  if (!string1 && !string2) {
-    return 0;
-  }
-  if (string1 === null) {
-    return 1;
-  }
-  if (string2 === null) {
-    return -1;
-  }
-  return string2.toLowerCase().localeCompare(string2.toLowerCase());
-};
-
-const arrayCompare = (array1, array2) => {
-  if ((!array1 || !array1.length) && (!array2 || !array2.length)) {
-    return 0;
-  }
-  if (!array1 || !array1.length) {
-    return 1;
-  }
-  if (!array2 || !array2.length) {
-    return -1;
-  }
-  return array1[0].toLowerCase().localeCompare(array2[0].toLowerCase());
-};
-
-const numberCompare = (number1, number2) => {
-  if (!number1 && !number2) {
-    return 0;
-  }
-  if (!number1) {
-    return 1;
-  }
-  if (!number2) {
-    return -1;
-  }
-  return number1 - number2;
-};
 
 export const isAudioFile = file =>
   statAsync(file)
@@ -91,3 +57,45 @@ export const getArtistAndAlbum = ({ artist, album }) => {
   }
   return '';
 };
+
+export const getInitialState = () =>
+  new Bluebird((resolve, reject) => {
+    storage.get('state', (error, data = {}) => {
+      if (error) {
+        return reject(error);
+      }
+
+      const initialState = {
+        ...data,
+        music: data.music || musicInitialState,
+        queue: data.queue || queueInitialState,
+        settings: data.settings || settingsInitialState
+      };
+
+      const musicListByFile = {};
+      Object.keys(initialState.music.list).forEach(key => {
+        musicListByFile[
+          initialState.music.list[key].file
+        ] = initialState.music.list[key];
+      });
+
+      filter(Object.keys(musicListByFile), isAudioFile)
+        .then(files => {
+          const musicList = {};
+
+          files.forEach(file => {
+            musicList[musicListByFile[file].key] = musicListByFile[file];
+          });
+
+          const queueList = initialState.queue.list.filter(
+            key => !!musicList[key]
+          );
+
+          initialState.music.list = musicList;
+          initialState.queue.list = queueList;
+
+          return resolve(initialState);
+        })
+        .catch(reject);
+    });
+  });

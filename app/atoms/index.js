@@ -11,4 +11,5 @@ export { default as ListItem } from './ListItem';
 export { default as Snackbar } from './Snackbar';
 export { default as FlatButton } from './FlatButton';
 export { default as LinearProgress } from './LinearProgress';
+export { default as CircularProgress } from './CircularProgress';
 export { getIcon } from './icon';

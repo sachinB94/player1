@@ -20,8 +20,16 @@ class App extends Component {
   };
 
   state: {
-    menuHeight: string
+    menuHeight: string,
+    initialLoading: boolean
   };
+
+  componentWillMount() {
+    const spinner = document.getElementById('spinner-container');
+    if (spinner && spinner.parentNode) {
+      spinner.parentNode.removeChild(spinner);
+    }
+  }
 
   componentDidMount() {
     this.setMenuHeight();
@@ -31,7 +39,7 @@ class App extends Component {
     const player = document.getElementById('player-container');
     const menu = document.getElementById('menu-container');
     if (document.documentElement && player && menu) {
-      const viewportHeight = Math.max(
+      const viewportHeight = Math.min(
         document.documentElement.clientHeight,
         window.innerHeight || 0
       );
