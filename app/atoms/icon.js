@@ -8,7 +8,11 @@ import AvVolumeMute from 'material-ui/svg-icons/av/volume-mute';
 import AvVolumeUp from 'material-ui/svg-icons/av/volume-up';
 import AvQueue from 'material-ui/svg-icons/av/queue-music';
 import AvLibrary from 'material-ui/svg-icons/av/library-music';
+import AvRepeat from 'material-ui/svg-icons/av/repeat';
+import AvRepeatOne from 'material-ui/svg-icons/av/repeat-one';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
+import ContentAddCircleOutline
+  from 'material-ui/svg-icons/content/add-circle-outline';
 import ActionSettings from 'material-ui/svg-icons/action/settings';
 import HardwareKeyboardArrowDown
   from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
@@ -33,6 +37,12 @@ export const getIcon = (icon: ?string, props: {} = {}) => {
       return <AvQueue {...props} />;
     case 'library':
       return <AvLibrary {...props} />;
+    case 'repeat':
+      return <AvRepeat {...props} />;
+    case 'repeat-one':
+      return <AvRepeatOne {...props} />;
+    case 'add-circle-outline':
+      return <ContentAddCircleOutline {...props} />;
     case 'delete':
       return <ActionDelete {...props} />;
     case 'settings':

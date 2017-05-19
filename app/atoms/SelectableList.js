@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { List, ListItem, makeSelectable } from 'material-ui/List';
+import { List, makeSelectable } from 'material-ui/List';
 
 import Subheader from './Subheader';
 
@@ -38,4 +38,3 @@ class SelectableListComponent extends Component {
 }
 
 export default SelectableListComponent;
-export { ListItem };

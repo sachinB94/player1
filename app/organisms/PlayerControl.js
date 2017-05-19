@@ -6,7 +6,8 @@ import { remote } from 'electron';
 import {
   LargeActionButton,
   MediumActionButton,
-  VolumeControl
+  VolumeControl,
+  RepeatControl
 } from '../molecules';
 
 const { app, globalShortcut } = remote;
@@ -22,6 +23,12 @@ const VolumeContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
+`;
+
+const RepeatContainer = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 0;
 `;
 
 class PlayerControl extends Component {
@@ -55,26 +62,33 @@ class PlayerControl extends Component {
   props: {
     status: string,
     volume: number,
+    repeat: string | null,
     onPlay: () => void,
     onPause: () => void,
     onPrevious: () => void,
     onNext: () => void,
-    onVolumeChange: () => void
+    onVolumeChange: () => void,
+    onRepeatChange: () => void
   };
 
   render() {
     const {
       status,
       volume,
+      repeat,
       onPlay,
       onPause,
       onPrevious,
       onNext,
-      onVolumeChange
+      onVolumeChange,
+      onRepeatChange
     } = this.props;
 
     return (
       <div style={{ position: 'relative' }}>
+        <RepeatContainer>
+          <RepeatControl value={repeat} onChange={onRepeatChange} />
+        </RepeatContainer>
         <Actions>
           <MediumActionButton icon="previous" onClick={onPrevious} />
           <div style={{ padding: '0 20px' }}>

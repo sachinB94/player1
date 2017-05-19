@@ -5,3 +5,4 @@ export { default as PlayerControl } from './PlayerControl';
 export { default as MusicDetails } from './MusicDetails';
 export { default as SideMenuList } from './SideMenuList';
 export { default as QueueList } from './QueueList';
+export { default as MusicList } from './MusicList';

@@ -3,6 +3,8 @@ import uniq from 'lodash.uniq';
 
 import type { queueStateType } from '../reducers/queue';
 
+import { showSnackbar } from './settings';
+
 import {
   SET_QUEUE,
   PLAY_CURRENT,
@@ -13,7 +15,8 @@ import {
   SET_VOLUME,
   CURRENT_AND_LAST_REMOVED,
   CURRENT_REMOVED,
-  SORT
+  SORT,
+  SET_REPEAT
 } from '../reducers/queue';
 
 const playCurrent = () => ({ type: PLAY_CURRENT });
@@ -37,11 +40,17 @@ export const currentRemoved = (id: string) => ({
   type: CURRENT_REMOVED,
   data: id
 });
+export const setRepeat = (repeat: string | null) => ({
+  type: SET_REPEAT,
+  data: repeat
+});
 
+// THUNK
 export const add = (list: string[]) =>
   (dispatch: () => void, getState: () => { queue: queueStateType }) => {
     const { queue } = getState();
     dispatch(set(uniq(queue.list.concat(list))));
+    dispatch(showSnackbar('Item added to queue'));
   };
 
 export const play = () =>

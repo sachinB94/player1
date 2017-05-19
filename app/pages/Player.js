@@ -9,7 +9,14 @@ import { MusicBar, PlayerControl, MusicDetails } from '../organisms';
 import type { musicItemType } from '../reducers/music';
 import type { queueStateType } from '../reducers/queue';
 
-import { play, pause, next, previous, setVolume } from '../actions/queue';
+import {
+  play,
+  pause,
+  next,
+  previous,
+  setRepeat,
+  setVolume
+} from '../actions/queue';
 import { currentMusicSelector } from '../selectors/queue';
 
 class Player extends Component {
@@ -35,15 +42,27 @@ class Player extends Component {
     this.setState({ position });
   };
 
+  onNext = () => {
+    this.setState({ position: 0 });
+    this.props.onNext();
+  };
+
+  onPrevious = () => {
+    this.setState({ position: 0 });
+    this.props.onPrevious();
+  };
+
   props: {
     current: musicItemType,
     status: string,
     volume: number,
+    repeat: string | null,
     onPlay: () => {},
     onPause: () => {},
     onNext: () => {},
     onPrevious: () => {},
-    onVolumeChange: () => {}
+    onVolumeChange: () => {},
+    onRepeatChange: () => {}
   };
 
   render() {
@@ -51,11 +70,11 @@ class Player extends Component {
       current,
       status,
       volume,
+      repeat,
       onPlay,
       onPause,
-      onPrevious,
-      onNext,
-      onVolumeChange
+      onVolumeChange,
+      onRepeatChange
     } = this.props;
     const { duration, position } = this.state;
 
@@ -84,11 +103,13 @@ class Player extends Component {
           <PlayerControl
             status={status}
             volume={volume}
+            repeat={repeat}
             onPlay={onPlay}
             onPause={onPause}
-            onPrevious={onPrevious}
-            onNext={onNext}
+            onPrevious={this.onPrevious}
+            onNext={this.onNext}
             onVolumeChange={onVolumeChange}
+            onRepeatChange={onRepeatChange}
           />
         </Card>
         {current &&
@@ -99,7 +120,7 @@ class Player extends Component {
             volume={volume}
             onLoading={this.onLoading}
             onPlaying={this.onPlaying}
-            onFinishedPlaying={onNext}
+            onFinishedPlaying={this.onNext}
           />}
       </div>
     );
@@ -112,6 +133,7 @@ const mapStateToProps = (
   current: currentMusicSelector(state),
   status: state.queue.status,
   volume: state.queue.volume,
+  repeat: state.queue.repeat,
   theme: state.settings.theme
 });
 
@@ -120,6 +142,7 @@ const mapDispatchToProps = (dispatch: () => void) => ({
   onPause: () => dispatch(pause()),
   onNext: () => dispatch(next()),
   onPrevious: () => dispatch(previous()),
+  onRepeatChange: (repeat: string | null) => dispatch(setRepeat(repeat)),
   onVolumeChange: (volume: number) => dispatch(setVolume(volume))
 });
 

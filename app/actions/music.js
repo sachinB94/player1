@@ -10,21 +10,36 @@ import findIndex from 'lodash.findindex';
 import type { musicListType, musicStateType } from '../reducers/music';
 
 import {
+  SET_MUSIC,
   DIRECTORY_SELECT_START,
   DIRECTORY_SELECT_SUCCESS,
-  DIRECTORY_SELECT_FAIL
+  DIRECTORY_SELECT_FAIL,
+  SORT
 } from '../reducers/music';
 
 import { isAudioFile, getMetadata } from '../utils/helpers';
 
 const globAsync = promisify(glob);
 
+export const set = (list: musicListType) => ({ type: SET_MUSIC, data: list });
 export const directorySelectStart = () => ({ type: DIRECTORY_SELECT_START });
 export const directorySelectSuccess = (list: musicListType) => ({
   type: DIRECTORY_SELECT_SUCCESS,
   data: list
 });
 export const directorySelectFail = () => ({ type: DIRECTORY_SELECT_FAIL });
+export const sort = (sortBy: { key: string, type: string }) => ({
+  type: SORT,
+  data: sortBy
+});
+export const remove = (id: string) =>
+  (dispatch: () => void, getState: () => { music: musicStateType }) => {
+    const { music } = getState();
+
+    const list = { ...music.list };
+    delete list[id];
+    dispatch(set(list));
+  };
 
 export const directorySelect = (directory: string) =>
   (dispatch: () => void, getState: () => { music: musicStateType }) => {

@@ -31,7 +31,7 @@
   "browserslist": "electron 1.4",
   "build": {
     "productName": "MusicPlayer",
-    "appId": "org.develar.MusicPlayer",
+    "appId": "com.MusicPlayer",
     "category": "public.app-category.tools",
     "dmg": {
       "contents": [

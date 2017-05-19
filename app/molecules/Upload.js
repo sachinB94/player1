@@ -1,12 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { remote } from 'electron';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
-import { Button } from '../atoms';
+import { IconButton } from '../atoms';
 
 const { dialog } = remote;
 
-export default class Upload extends Component {
+class Upload extends Component {
   onUploadClick = () => {
     const paths = dialog.showOpenDialog({ properties: ['openDirectory'] });
     if (paths && paths.length) {
@@ -15,15 +16,21 @@ export default class Upload extends Component {
   };
 
   props: {
-    children: HTMLElement,
+    muiTheme: { palette: { primary1Color: string } },
     onUpload: () => void
   };
 
   render() {
+    const { primary1Color } = this.props.muiTheme.palette;
+
     return (
-      <Button onClick={this.onUploadClick}>
-        {this.props.children}
-      </Button>
+      <IconButton
+        icon="add-circle-outline"
+        iconStyle={{ color: primary1Color, fontSize: 20 }}
+        onClick={this.onUploadClick}
+      />
     );
   }
 }
+
+export default muiThemeable()(Upload);

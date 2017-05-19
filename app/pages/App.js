@@ -4,9 +4,13 @@ import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
+import { Snackbar } from '../atoms';
+
 import Player from './Player';
 import SideMenu from './SideMenu';
 import Settings from './Settings';
+
+import { hideSnackbar } from '../actions/settings';
 
 import * as themes from '../utils/themes';
 
@@ -39,12 +43,14 @@ class App extends Component {
 
   props: {
     children: HTMLElement,
-    theme: string
+    theme: string,
+    snackbar: { open: boolean, message: string },
+    onSnackbarClose: () => void
   };
 
   render() {
     const { menuHeight } = this.state;
-    const { theme, children } = this.props;
+    const { theme, children, snackbar, onSnackbarClose } = this.props;
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(themes[theme])}>
@@ -64,14 +70,28 @@ class App extends Component {
               {children}
             </div>
           </div>
+          <Snackbar
+            open={snackbar.open}
+            message={snackbar.message}
+            onClose={onSnackbarClose}
+          />
         </div>
       </MuiThemeProvider>
     );
   }
 }
 
-const mapStateToProps = (state: { settings: { theme: string } }) => ({
-  theme: state.settings.theme
+const mapStateToProps = (
+  state: {
+    settings: { theme: string, snackbar: { open: boolean, message: string } }
+  }
+) => ({
+  theme: state.settings.theme,
+  snackbar: state.settings.snackbar
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch: () => void) => ({
+  onSnackbarClose: () => dispatch(hideSnackbar())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

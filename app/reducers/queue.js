@@ -3,6 +3,7 @@ export type queueStateType = {
   list: string[],
   status: string,
   current: string | null,
+  repeat: string | null,
   volume: number,
   sortBy: { key: string, type: string }
 };
@@ -23,11 +24,13 @@ export const SET_VOLUME = 'SET_VOLUME';
 export const CURRENT_AND_LAST_REMOVED = 'CURRENT_AND_LAST_REMOVED';
 export const CURRENT_REMOVED = 'CURRENT_REMOVED';
 export const SORT = 'SORT';
+export const SET_REPEAT = 'SET_REPEAT';
 
 const initialState = {
   list: [],
   status: 'STOPPED',
   current: null,
+  repeat: null,
   volume: 100,
   sortBy: { key: 'title', type: 'asc' }
 };
@@ -43,37 +46,62 @@ export default function music(
     case PLAY_CURRENT:
       return { ...state, status: 'PLAYING' };
     case PLAY_FROM:
-      return { ...state, status: 'PLAYING', current: action.data };
+      return { ...state, status: 'PLAYING', current: data };
     case PAUSE_QUEUE:
       return { ...state, status: 'PAUSED' };
     case NEXT_QUEUE: {
+      // No Song is being played
       if (!state.current) {
         return state;
       }
-      const currentIndex = state.list.indexOf(state.current);
-      if (currentIndex === state.list.length) {
-        return state;
+
+      // If single repeat is selected, set current to current again
+      if (state.repeat === 'ONE') {
+        return { ...state, current: state.current };
       }
+
+      const currentIndex = state.list.indexOf(state.current);
+
+      // If end of queue is reached
+      if (currentIndex === state.list.length - 1) {
+        // If all repeat is selected, set current to first item
+        if (state.repeat === 'ALL') {
+          return { ...state, current: state.list[0] };
+        }
+
+        // Queue ended
+        return { ...state, status: 'PAUSED' };
+      }
+
+      // If everything is alright, play the next song
       return { ...state, current: state.list[currentIndex + 1] };
     }
     case PREVIOUS_QUEUE: {
       if (!state.current) {
         return state;
       }
+      if (state.repeat === 'ONE') {
+        return { ...state, current: state.current };
+      }
       const currentIndex = state.list.indexOf(state.current);
       if (currentIndex === 0) {
+        if (state.repeat === 'ALL') {
+          return { ...state, current: state.list[state.list.length - 1] };
+        }
         return state;
       }
       return { ...state, current: state.list[currentIndex - 1] };
     }
     case SET_VOLUME:
-      return { ...state, volume: action.data };
+      return { ...state, volume: data };
     case CURRENT_AND_LAST_REMOVED:
       return { ...state, status: 'PAUSED', current: null };
     case CURRENT_REMOVED:
-      return { ...state, current: action.data };
+      return { ...state, current: data };
     case SORT:
-      return { ...state, sortBy: action.data };
+      return { ...state, sortBy: data };
+    case SET_REPEAT:
+      return { ...state, repeat: data };
     default:
       return state;
   }
