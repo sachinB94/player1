@@ -14,11 +14,3 @@ export const AUDIO_FORMATS = [
   'audio/wave',
   'audio/x-wav'
 ];
-
-export const MUSIC_SORT_OPTIONS = [
-  { value: 'title', label: 'Title' },
-  { value: 'album', label: 'Album' },
-  { value: 'artist', label: 'Artist' },
-  { value: 'genre', label: 'Genre' },
-  { value: 'year', label: 'Year' }
-];

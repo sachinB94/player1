@@ -15,17 +15,13 @@ import {
   SET_VOLUME,
   CURRENT_AND_LAST_REMOVED,
   CURRENT_REMOVED,
-  SORT,
+  REMOVE_ALL,
   SET_REPEAT
 } from '../reducers/queue';
 
 const playCurrent = () => ({ type: PLAY_CURRENT });
 
 export const set = (list: string[]) => ({ type: SET_QUEUE, data: list });
-export const sort = (sortBy: { key: string, type: string }) => ({
-  type: SORT,
-  data: sortBy
-});
 export const playFrom = (id: string) => ({ type: PLAY_FROM, data: id });
 
 export const pause = () => ({ type: PAUSE_QUEUE });
@@ -44,6 +40,7 @@ export const setRepeat = (repeat: string | null) => ({
   type: SET_REPEAT,
   data: repeat
 });
+export const removeAll = () => ({ type: REMOVE_ALL });
 
 // THUNK
 export const add = (list: string[]) =>

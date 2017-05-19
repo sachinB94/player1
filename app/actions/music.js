@@ -13,8 +13,7 @@ import {
   SET_MUSIC,
   DIRECTORY_SELECT_START,
   DIRECTORY_SELECT_SUCCESS,
-  DIRECTORY_SELECT_FAIL,
-  SORT
+  DIRECTORY_SELECT_FAIL
 } from '../reducers/music';
 
 import { isAudioFile, getMetadata } from '../utils/helpers';
@@ -28,10 +27,8 @@ export const directorySelectSuccess = (list: musicListType) => ({
   data: list
 });
 export const directorySelectFail = () => ({ type: DIRECTORY_SELECT_FAIL });
-export const sort = (sortBy: { key: string, type: string }) => ({
-  type: SORT,
-  data: sortBy
-});
+
+// THUNK
 export const remove = (id: string) =>
   (dispatch: () => void, getState: () => { music: musicStateType }) => {
     const { music } = getState();

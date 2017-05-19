@@ -1,12 +1,19 @@
 // @flow
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
-import { SelectableList, ListItem } from '../atoms';
-import { MusicListItem, Sorter } from '../molecules';
+import { SelectableList, ListItem, FlatButton } from '../atoms';
+import { MusicListItem } from '../molecules';
 
 import type { musicItemType } from '../reducers/music';
 
-import { MUSIC_SORT_OPTIONS } from '../utils/constants';
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 10px;
+`;
 
 class QueueList extends Component {
   componentDidMount() {
@@ -22,25 +29,26 @@ class QueueList extends Component {
   props: {
     list: musicItemType[],
     value: string,
-    sortBy: { key: string, type: string },
+    muiTheme: { palette: { dangerColor: string } },
     onChange: () => void,
     onDelete: (string) => void,
-    onSort: () => void
+    onDeleteAll: () => void
   };
 
   render() {
-    const { list, value, sortBy, onChange, onDelete, onSort } = this.props;
+    const { list, value, onChange, onDelete, onDeleteAll } = this.props;
+
+    const { dangerColor } = this.props.muiTheme.palette;
 
     const title = (
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Title>
         <span>Queue</span>
-        <Sorter
-          title="Sort By"
-          value={sortBy}
-          options={MUSIC_SORT_OPTIONS}
-          onChange={onSort}
-        />
-      </div>
+        {list && list.length
+          ? <FlatButton style={{ color: dangerColor }} onClick={onDeleteAll}>
+              Delete All
+            </FlatButton>
+          : ''}
+      </Title>
     );
 
     return (
@@ -64,4 +72,4 @@ class QueueList extends Component {
   }
 }
 
-export default QueueList;
+export default muiThemeable()(QueueList);

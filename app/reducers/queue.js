@@ -4,8 +4,7 @@ export type queueStateType = {
   status: string,
   current: string | null,
   repeat: string | null,
-  volume: number,
-  sortBy: { key: string, type: string }
+  volume: number
 };
 
 type actionType = {
@@ -23,16 +22,15 @@ export const PREVIOUS_QUEUE = 'PREVIOUS_QUEUE';
 export const SET_VOLUME = 'SET_VOLUME';
 export const CURRENT_AND_LAST_REMOVED = 'CURRENT_AND_LAST_REMOVED';
 export const CURRENT_REMOVED = 'CURRENT_REMOVED';
-export const SORT = 'SORT';
 export const SET_REPEAT = 'SET_REPEAT';
+export const REMOVE_ALL = 'REMOVE_ALL';
 
 const initialState = {
   list: [],
   status: 'STOPPED',
   current: null,
   repeat: null,
-  volume: 100,
-  sortBy: { key: 'title', type: 'asc' }
+  volume: 100
 };
 
 export default function music(
@@ -70,7 +68,7 @@ export default function music(
         }
 
         // Queue ended
-        return { ...state, status: 'PAUSED' };
+        return { ...state, status: 'STOPPED', current: null };
       }
 
       // If everything is alright, play the next song
@@ -88,7 +86,7 @@ export default function music(
         if (state.repeat === 'ALL') {
           return { ...state, current: state.list[state.list.length - 1] };
         }
-        return state;
+        return { ...state, status: 'STOPPED', current: null };
       }
       return { ...state, current: state.list[currentIndex - 1] };
     }
@@ -98,10 +96,10 @@ export default function music(
       return { ...state, status: 'PAUSED', current: null };
     case CURRENT_REMOVED:
       return { ...state, current: data };
-    case SORT:
-      return { ...state, sortBy: data };
     case SET_REPEAT:
       return { ...state, repeat: data };
+    case REMOVE_ALL:
+      return { ...state, list: [], status: 'STOPPED', current: null };
     default:
       return state;
   }

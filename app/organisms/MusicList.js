@@ -1,52 +1,53 @@
 // @flow
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
-import { List, ListItem } from '../atoms';
-import { MusicListItem, Sorter, Upload } from '../molecules';
+import { List, ListItem, FlatButton } from '../atoms';
+import { MusicListItem, Upload } from '../molecules';
 
 import type { musicItemType } from '../reducers/music';
 
-import { MUSIC_SORT_OPTIONS } from '../utils/constants';
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 10px;
+`;
 
 class QueueList extends Component {
   props: {
     list: musicItemType[],
-    sortBy: { key: string, type: string },
     onDirectorySelect: () => void,
     onAdd: () => void,
-    onDelete: (string) => void,
-    onSort: () => void
+    onDelete: (string) => void
   };
 
   render() {
     const {
       list,
-      sortBy,
       onDirectorySelect,
       onAdd,
-      onDelete,
-      onSort
+      onDelete
     } = this.props;
 
     const title = (
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Title>
         <div style={{ display: 'flex' }}>
           <span>Library</span>
           <div style={{ marginLeft: 10 }}>
             <Upload onUpload={onDirectorySelect} />
           </div>
         </div>
-        <Sorter
-          title="Sort By"
-          value={sortBy}
-          options={MUSIC_SORT_OPTIONS}
-          onChange={onSort}
-        />
-      </div>
+        {list && list.length
+          ? <FlatButton onClick={() => onAdd(list.map(({ key }) => key))}>
+              Play all
+            </FlatButton>
+          : ''}
+      </Title>
     );
 
     return (
-      <List title={title}>
+      <List title={title} style={{ padding: 0 }}>
         {list.map(item => (
           <ListItem
             containerElement={props => (

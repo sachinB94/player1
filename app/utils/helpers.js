@@ -91,23 +91,3 @@ export const getArtistAndAlbum = ({ artist, album }) => {
   }
   return '';
 };
-
-export const sortMusicList = (list = [], sort) => {
-  list.sort((item1, item2) => {
-    let seq = 0;
-    if (sort.key === 'title') {
-      seq = stringCompare(item1.title, item2.title);
-    } else if (sort.key === 'album') {
-      seq = stringCompare(item1.album, item2.album);
-    } else if (sort.key === 'artist') {
-      seq = arrayCompare(item1.artist, item2.artist[0]);
-    } else if (sort.key === 'genre') {
-      seq = arrayCompare(item1.genre, item2.genre[0]);
-    } else if (sort.key === 'year') {
-      seq = numberCompare(item1.year, item2.year);
-    }
-
-    return sort.type === 'asc' ? seq : -1 * seq;
-  });
-  return list;
-};

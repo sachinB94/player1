@@ -9,4 +9,5 @@ export { default as List } from './List';
 export { default as SelectableList } from './SelectableList';
 export { default as ListItem } from './ListItem';
 export { default as Snackbar } from './Snackbar';
+export { default as FlatButton } from './FlatButton';
 export { getIcon } from './icon';

@@ -7,19 +7,21 @@ import Subheader from './Subheader';
 class ListComponent extends Component {
   static defaultProps = {
     title: null,
+    style: {},
     children: ''
   };
 
   props: {
     title: string | HTMLElement,
+    style: {},
     children: HTMLElement
   };
 
   render() {
-    const { title, children } = this.props;
+    const { title, style, children } = this.props;
 
     return (
-      <List>
+      <List style={style}>
         {title && <Subheader>{title}</Subheader>}
         {children}
       </List>

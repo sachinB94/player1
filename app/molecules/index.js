@@ -4,4 +4,3 @@ export { default as MediumActionButton } from './MediumActionButton';
 export { default as VolumeControl } from './VolumeControl';
 export { default as RepeatControl } from './RepeatControl';
 export { default as MusicListItem } from './MusicListItem';
-export { default as Sorter } from './Sorter';

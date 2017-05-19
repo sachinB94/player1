@@ -1,7 +1,5 @@
 import { createSelector } from 'reselect';
 
-import { sortMusicList } from '../utils/helpers';
-
 const musicSelector = state => state.music;
 
 export const musicObjectSelector = createSelector(
@@ -10,7 +8,6 @@ export const musicObjectSelector = createSelector(
 );
 
 export const musicListSelector = createSelector(
-  [musicObjectSelector, musicSelector],
-  (musicObject = {}, { sortBy }) =>
-    sortMusicList(Object.keys(musicObject).map(key => musicObject[key]), sortBy)
+  [musicObjectSelector],
+  (musicObject = {}) => Object.keys(musicObject).map(key => musicObject[key])
 );
