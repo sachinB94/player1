@@ -16,6 +16,8 @@ import {
   DIRECTORY_SELECT_FAIL
 } from '../reducers/music';
 
+import { removeAll as queueRemoveAll } from './queue';
+
 import { isAudioFile, getMetadata } from '../utils/helpers';
 
 const globAsync = promisify(glob);
@@ -36,6 +38,12 @@ export const remove = (id: string) =>
     const list = { ...music.list };
     delete list[id];
     dispatch(set(list));
+  };
+
+export const removeAll = () =>
+  (dispatch: () => void) => {
+    dispatch(set({}));
+    dispatch(queueRemoveAll());
   };
 
 export const directorySelect = (directory: string) =>

@@ -33,7 +33,7 @@ export const getMetadata = file =>
         album: metadata.album.trim(),
         artist: metadata.artist.map(a => a.trim()),
         year: metadata.year ? parseInt(metadata.year.trim(), 10) : null,
-        genre: metadata.genre.map(g => g.trim())
+        genre: metadata.genre.map(g => g && g !== 'genre' ? g.trim() : null)
       });
     });
   });

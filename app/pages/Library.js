@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Card, LinearProgress } from '../atoms';
 import { MusicList } from '../organisms';
 
-import { directorySelect, remove } from '../actions/music';
+import { directorySelect, remove, removeAll } from '../actions/music';
 import { add } from '../actions/queue';
 import { musicListSelector } from '../selectors/music';
 
@@ -21,6 +21,7 @@ class Library extends Component {
     loading: boolean,
     onAdd: () => void,
     onMusicDelete: () => void,
+    onMusicDeleteAll: () => void,
     onDirectorySelect: () => void
   };
 
@@ -30,6 +31,7 @@ class Library extends Component {
       loading,
       onAdd,
       onMusicDelete,
+      onMusicDeleteAll,
       onDirectorySelect
     } = this.props;
 
@@ -45,6 +47,7 @@ class Library extends Component {
           loading={loading}
           onAdd={onAdd}
           onDelete={onMusicDelete}
+          onDeleteAll={onMusicDeleteAll}
           onDirectorySelect={onDirectorySelect}
         />
       </Card>
@@ -63,7 +66,8 @@ const mapStateToProps = (
 const mapDispatchToProps = (dispatch: () => void) => ({
   onDirectorySelect: directory => dispatch(directorySelect(directory)),
   onAdd: queue => dispatch(add(queue)),
-  onMusicDelete: id => dispatch(remove(id))
+  onMusicDelete: id => dispatch(remove(id)),
+  onMusicDeleteAll: () => dispatch(removeAll())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Library);

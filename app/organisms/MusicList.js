@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import { List, ListItem, FlatButton } from '../atoms';
 import { MusicListItem, Upload } from '../molecules';
@@ -17,9 +18,11 @@ const Title = styled.div`
 class QueueList extends Component {
   props: {
     list: musicItemType[],
+    muiTheme: { palette: { dangerColor: string } },
     onDirectorySelect: () => void,
     onAdd: () => void,
-    onDelete: (string) => void
+    onDelete: (string) => void,
+    onDeleteAll: () => void
   };
 
   render() {
@@ -27,8 +30,11 @@ class QueueList extends Component {
       list,
       onDirectorySelect,
       onAdd,
-      onDelete
+      onDelete,
+      onDeleteAll
     } = this.props;
+
+    const { dangerColor } = this.props.muiTheme.palette;
 
     const title = (
       <Title>
@@ -39,9 +45,14 @@ class QueueList extends Component {
           </div>
         </div>
         {list && list.length
-          ? <FlatButton onClick={() => onAdd(list.map(({ key }) => key))}>
-              Play all
-            </FlatButton>
+          ? <div>
+              <FlatButton onClick={() => onAdd(list.map(({ key }) => key))}>
+                Play all
+              </FlatButton>
+              <FlatButton style={{ color: dangerColor }} onClick={onDeleteAll}>
+                Delete All
+              </FlatButton>
+            </div>
           : ''}
       </Title>
     );
@@ -67,4 +78,4 @@ class QueueList extends Component {
   }
 }
 
-export default QueueList;
+export default muiThemeable()(QueueList);
