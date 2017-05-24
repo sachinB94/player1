@@ -12,4 +12,5 @@ export { default as Snackbar } from './Snackbar';
 export { default as FlatButton } from './FlatButton';
 export { default as LinearProgress } from './LinearProgress';
 export { default as CircularProgress } from './CircularProgress';
+export { default as Drawer } from './Drawer';
 export { getIcon } from './icon';

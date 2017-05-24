@@ -11,6 +11,7 @@ import AvLibrary from 'material-ui/svg-icons/av/library-music';
 import AvRepeat from 'material-ui/svg-icons/av/repeat';
 import AvRepeatOne from 'material-ui/svg-icons/av/repeat-one';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import ContentAddCircleOutline
   from 'material-ui/svg-icons/content/add-circle-outline';
 import ActionSettings from 'material-ui/svg-icons/action/settings';
@@ -47,6 +48,8 @@ export const getIcon = (icon: ?string, props: {} = {}) => {
       return <ActionDelete {...props} />;
     case 'settings':
       return <ActionSettings {...props} />;
+    case 'close':
+      return <NavigationClose {...props} />;
     case 'arrow-up':
       return <HardwareKeyboardArrowUp {...props} />;
     case 'arrow-down':

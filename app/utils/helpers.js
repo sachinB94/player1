@@ -68,7 +68,7 @@ export const getInitialState = () =>
       const initialState = {
         ...data,
         music: data.music || musicInitialState,
-        queue: data.queue || queueInitialState,
+        queue: { ...(data.queue || queueInitialState), status: 'STOPPED' },
         settings: data.settings || settingsInitialState
       };
 

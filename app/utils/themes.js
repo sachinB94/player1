@@ -3,14 +3,6 @@ import { white, cyan400, blueGrey700, red500 } from 'material-ui/styles/colors';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 
-export const themes = [
-  { value: 'cyanOnLight', label: 'Cyan / Light' },
-  { value: 'cyanOnDark', label: 'Cyan / Dark' },
-  { value: 'whiteOnDark', label: 'white / Dark' },
-  { value: 'lightCyanOnDark', label: 'Light Cyan / Dark' },
-  { value: 'cyanOnBlueGrey', label: 'Cyan / Blue Grey' }
-];
-
 export const cyanOnLight = {
   ...lightBaseTheme,
   palette: {
@@ -58,3 +50,11 @@ export const cyanOnBlueGrey = {
     dangerColor: red500
   }
 };
+
+export const themes = [
+  { name: 'cyanOnLight', value: cyanOnLight },
+  { name: 'cyanOnDark', value: cyanOnDark },
+  { name: 'whiteOnDark', value: whiteOnDark },
+  { name: 'lightCyanOnDark', value: lightCyanOnDark },
+  { name: 'cyanOnBlueGrey', value: cyanOnBlueGrey }
+];

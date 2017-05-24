@@ -1,7 +1,7 @@
 {
-  "name": "music-player",
-  "productName": "MusicPlayer",
-  "version": "0.0.1",
+  "name": "player1",
+  "productName": "Player1",
+  "version": "1.0.0",
   "description": "A music player built with Electron, React and Redux",
   "main": "./main.js",
   "author": {
