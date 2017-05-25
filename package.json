@@ -30,8 +30,8 @@
   },
   "browserslist": "electron 1.4",
   "build": {
-    "productName": "MusicPlayer",
-    "appId": "com.MusicPlayer",
+    "productName": "Player1",
+    "appId": "com.player1",
     "category": "public.app-category.tools",
     "dmg": {
       "contents": [
@@ -75,7 +75,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/sachinB94/music-player.git"
+    "url": "git+https://github.com/sachinb94/player1.git"
   },
   "author": {
     "name": "Sachin Bansal",
@@ -84,18 +84,17 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/sachinB94/music-player/issues"
+    "url": "https://github.com/sachinb94/player1/issues"
   },
   "keywords": [
+    "player1",
+    "music",
+    "player",
     "electron",
-    "boilerplate",
     "react",
-    "react-router",
-    "flux",
-    "webpack",
-    "react-hot"
+    "redux"
   ],
-  "homepage": "https://gitlab.com/sachinB94/music-player#readme",
+  "homepage": "https://github.com/sachinb94/player1",
   "devDependencies": {
     "asar": "^0.13.0",
     "babel-core": "^6.22.1",

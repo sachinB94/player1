@@ -25,9 +25,9 @@ class App extends Component {
   };
 
   componentWillMount() {
-    const spinner = document.getElementById('spinner-container');
-    if (spinner && spinner.parentNode) {
-      spinner.parentNode.removeChild(spinner);
+    const loader = document.getElementById('loader-container');
+    if (loader && loader.parentNode) {
+      loader.parentNode.removeChild(loader);
     }
   }
 

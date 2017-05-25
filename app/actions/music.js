@@ -56,7 +56,7 @@ export const directorySelect = (directory: string) =>
       .then(files => filter(files, isAudioFile))
       .then(files => map(files, getMetadata))
       .then(list => {
-        let listObject = {};
+        const listObject = {};
         list.forEach(item => {
           const pos = findIndex(Object.keys(music.list), key =>
             isEqual(
@@ -68,7 +68,7 @@ export const directorySelect = (directory: string) =>
             return;
           }
           const key = uuid.v4();
-          listObject = { ...listObject, [key]: { ...item, key } };
+          listObject[key] = { ...item, key };
         });
         return dispatch(directorySelectSuccess(listObject));
       })

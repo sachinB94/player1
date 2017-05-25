@@ -33,7 +33,7 @@ export const getMetadata = file =>
         album: metadata.album.trim(),
         artist: metadata.artist.map(a => a.trim()),
         year: metadata.year ? parseInt(metadata.year.trim(), 10) : null,
-        genre: metadata.genre.map(g => g && g !== 'genre' ? g.trim() : null)
+        genre: metadata.genre.filter(g => g && g !== 'genre')
       });
     });
   });
@@ -93,6 +93,13 @@ export const getInitialState = () =>
 
           initialState.music.list = musicList;
           initialState.queue.list = queueList;
+
+          if (
+            initialState.queue.current &&
+            queueList.indexOf(initialState.queue.current) === -1
+          ) {
+            initialState.queue.current = null;
+          }
 
           return resolve(initialState);
         })
