@@ -1,8 +1,8 @@
 # Player 1 - Music Player
 
 <div style="text-align: center">
-  <p><img src="./assets/logo.svg" /></p>
-  <p><img style="margin: 20px 0;" src="./assets/text.svg" /></p>
+  <p><img src="./assets/logo.png" /></p>
+  <p><img style="margin: 20px 0;" src="./assets/text.png" /></p>
 </div>
 
 A music player built with [Electron](http://electron.atom.io/), [React](https://facebook.github.io/react/) and [Redux](https://github.com/reactjs/redux).
@@ -10,7 +10,7 @@ A music player built with [Electron](http://electron.atom.io/), [React](https://
 ## Screenshot
 
 <div style="text-align: center">
-  <img style="border: 2px solid #26C6DA; border-radius: 5px;" src="./assets/screenshot.png" />
+  <img style="width: 70%;" src="./assets/screenshot.png" />
 </div>
 
 ## Install
