@@ -49,7 +49,7 @@ app.on('ready', async () => {
     icon: path.join(__dirname, '../resources/icon.ico')
   });
 
-  mainWindow.maximize();
+  mainWindow.setFullScreen(true);
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
