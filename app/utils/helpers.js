@@ -12,6 +12,8 @@ import { AUDIO_FORMATS } from '../utils/constants';
 
 const statAsync = promisify(stat);
 
+const getFileName = file => file.substring(file.lastIndexOf('/') + 1, file.lastIndexOf('.'));
+
 export const isAudioFile = file =>
   statAsync(file)
     .then(
@@ -29,9 +31,9 @@ export const getMetadata = file =>
       }
       resolve({
         file,
-        title: metadata.title.trim(),
-        album: metadata.album.trim(),
-        artist: metadata.artist.map(a => a.trim()),
+        title: metadata.title || getFileName(file),
+        album: metadata.album,
+        artist: metadata.artist,
         year: metadata.year ? parseInt(metadata.year.trim(), 10) : null,
         genre: metadata.genre.filter(g => g && g !== 'genre')
       });

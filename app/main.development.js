@@ -45,7 +45,6 @@ app.on('ready', async () => {
     show: false,
     width: 1024,
     height: 728,
-    fullscreen: true,
     icon: path.join(__dirname, '../resources/icon.ico')
   });
 
