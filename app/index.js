@@ -22,7 +22,7 @@ getInitialState()
     store.subscribe(() => {
       const { music, queue, settings } = store.getState();
       storage.set(
-        'state',
+        'music_state',
         { music, queue, settings },
         err => err && console.log(err)
       );

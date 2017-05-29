@@ -1,7 +1,7 @@
 # Player 1 - Music Player
 
-<div style="text-align: center">
-  <p><img style="width: 200px;" src="./assets/icon.png" /></p>
+<div align="center" style="text-align: center">
+  <p><img width="200px" height="200px" style="width: 200px; height: 200px;" src="./assets/icon.png" /></p>
   <p><img style="margin: 20px 0;" src="./assets/text.png" /></p>
 </div>
 
@@ -10,7 +10,7 @@ A music player built with [Electron](http://electron.atom.io/), [React](https://
 ## Screenshot
 
 <div style="text-align: center">
-  <img style="width: 70%;" src="./assets/screenshot.png" />
+  <img style="width: 70%;" src="./assets/screenshots.png" />
 </div>
 
 ## Install
@@ -31,14 +31,7 @@ $ cd player1 && npm install
 
 ## Run
 
-Run these two commands __simultaneously__ in different console tabs.
-
-```bash
-$ npm run hot-server
-$ npm run start-hot
-```
-
-or run two servers with one command
+Run the command to start development server
 
 ```bash
 $ npm run dev

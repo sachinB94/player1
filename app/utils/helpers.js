@@ -62,7 +62,7 @@ export const getArtistAndAlbum = ({ artist, album }) => {
 
 export const getInitialState = () =>
   new Bluebird((resolve, reject) => {
-    storage.get('state', (error, data = {}) => {
+    storage.get('music_state', (error, data = {}) => {
       if (error) {
         return reject(error);
       }
