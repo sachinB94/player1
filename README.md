@@ -10,7 +10,7 @@ A music player built with [Electron](http://electron.atom.io/), [React](https://
 ## Screenshot
 
 <div style="text-align: center">
-  <img style="width: 70%;" src="./assets/screenshots.png" />
+  <img style="width: 70%;" src="./assets/screenshos.png" />
 </div>
 
 ## Install
